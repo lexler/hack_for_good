@@ -24,7 +24,7 @@ All buttons except for the configuration (button 5) contain a count
 6. UP (unlabeled praise)
 7. NTA (criticism)
 8. QU (question)
-9. CA (command)
+9. CM (command)
 The config button is slightly smaller than the others.
 
 #### Config Button

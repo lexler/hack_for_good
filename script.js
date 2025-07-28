@@ -13,7 +13,7 @@ class CounterApp {
             6: 'UP (unlabeled praise)',
             7: 'NTA (criticism)',
             8: 'QU (question)',
-            9: 'CA (command)'
+            9: 'CM (command)'
         };
         
         this.init();
