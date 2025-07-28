@@ -1,0 +1,40 @@
+# Project Description
+
+This is an app to count that lets you press 8 buttons to count in 8 categories
+
+## Technologies
+Single-page app with no backend that runs completely on the frontend in JS/TS.
+It's designed to run on a phone. 
+
+## Main Page
+9 buttons in a grid
+1 2 3
+4 5 6
+7 8 9
+
+All buttons except for the configuration contain a count
+
+### Button Descriptions
+1. LP (labeled praise)
+2. RF (reflect kid)
+3. BD (behavior description)
+4. TA (talk)
+5. - config 
+6. UP (unlabeled praise)
+7. NTA (criticism)
+8. QU (question)
+9. CA (command)
+The config button is slightly smaller than the others.
+
+#### Config Button
+The config button will pop up a screen on top of the screen with other less used buttons. 
+The four buttons are:
+- return 
+- undo last action 
+- cancel evaluation
+- finish evaluation
+When you hit finish evaluation, it gives you a list of the numbers next to the labels (counts). 
+
+## Serving
+To serve this local, we will use some technology (Claude please fill this in and draw my attention to you doing it)
+To serve it globally, it will be a github pages
