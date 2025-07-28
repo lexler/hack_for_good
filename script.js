@@ -6,14 +6,14 @@ class CounterApp {
         };
         this.actionHistory = [];
         this.labels = {
-            1: 'LP (labeled praise)',
-            2: 'RF (reflect kid)',
-            3: 'BD (behavior description)',
-            4: 'TA (talk)',
+            1: 'TA (talk)',
+            2: 'BD (behavior description)',
+            3: 'RF (reflect kid)',
+            4: 'LP (labeled praise)',
             6: 'UP (unlabeled praise)',
-            7: 'NTA (criticism)',
-            8: 'QU (question)',
-            9: 'CM (command)'
+            7: 'QU (question)',
+            8: 'CM (command)',
+            9: 'NTA (criticism)'
         };
         
         this.init();
@@ -36,13 +36,14 @@ class CounterApp {
             this.showConfigModal();
         });
         
+        document.getElementById('undo-direct-btn').addEventListener('click', () => {
+            this.undoLastAction();
+        });
+        
         document.getElementById('return-btn').addEventListener('click', () => {
             this.hideConfigModal();
         });
         
-        document.getElementById('undo-btn').addEventListener('click', () => {
-            this.undoLastAction();
-        });
         
         document.getElementById('cancel-btn').addEventListener('click', () => {
             this.cancelEvaluation();
