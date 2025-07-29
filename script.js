@@ -1,4 +1,4 @@
-// Version 0.0.12
+// Version 0.0.13
 
 // Configuration
 function getTimerDuration() {
@@ -14,7 +14,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.12';
+        this.version = '0.0.13';
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
             6: 0, 7: 0, 8: 0, 9: 0
@@ -80,6 +80,10 @@ class CounterApp {
         
         document.getElementById('results-return-btn').addEventListener('click', () => {
             this.hideResultsModal();
+        });
+        
+        document.getElementById('email-results-btn').addEventListener('click', () => {
+            this.emailResults();
         });
     }
     
@@ -301,6 +305,22 @@ class CounterApp {
             button.style.opacity = '';
             button.style.pointerEvents = '';
         });
+    }
+    
+    emailResults() {
+        const emailContent = this.generateEmailContent();
+        const subject = encodeURIComponent("Behavioral Observation Results");
+        const body = encodeURIComponent(emailContent);
+        const mailtoUrl = `mailto:RACHEL.4.WILSON@cuanschutz.edu?subject=${subject}&body=${body}`;
+        
+        window.location.href = mailtoUrl;
+    }
+    
+    generateEmailContent() {
+        // Only the 3 lines from the todo - no extras
+        return `Questionnaire: yes
+Asked about homework: yes
+Did coding analysis: yes`;
     }
 }
 
