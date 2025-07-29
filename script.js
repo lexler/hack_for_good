@@ -1,4 +1,4 @@
-// Version 0.0.13
+// Version 0.0.14
 
 // Configuration
 function getTimerDuration() {
@@ -14,12 +14,17 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.13';
+        this.version = '0.0.14';
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
             6: 0, 7: 0, 8: 0, 9: 0
         };
         this.actionHistory = [];
+        this.questionAnswers = {
+            homework: null,
+            questionnaire: null
+        };
+        this.currentQuestion = 0;
         this.timer = {
             startTime: null,
             duration: TIMER_DURATION_SECONDS,
@@ -83,7 +88,15 @@ class CounterApp {
         });
         
         document.getElementById('email-results-btn').addEventListener('click', () => {
-            this.emailResults();
+            this.startQuestionFlow();
+        });
+        
+        document.getElementById('yes-btn').addEventListener('click', () => {
+            this.answerQuestion(true);
+        });
+        
+        document.getElementById('no-btn').addEventListener('click', () => {
+            this.answerQuestion(false);
         });
     }
     
@@ -316,10 +329,51 @@ class CounterApp {
         window.location.href = mailtoUrl;
     }
     
+    startQuestionFlow() {
+        this.currentQuestion = 0;
+        this.questionAnswers = { homework: null, questionnaire: null };
+        this.showQuestion();
+    }
+    
+    showQuestion() {
+        const questions = [
+            "Did you ask about homework?",
+            "Did you administer the questionnaire?"
+        ];
+        
+        document.getElementById('question-text').textContent = questions[this.currentQuestion];
+        document.getElementById('question-modal').classList.add('show');
+    }
+    
+    answerQuestion(answer) {
+        if (this.currentQuestion === 0) {
+            this.questionAnswers.homework = answer;
+        } else if (this.currentQuestion === 1) {
+            this.questionAnswers.questionnaire = answer;
+        }
+        
+        this.currentQuestion++;
+        
+        if (this.currentQuestion < 2) {
+            // More questions to ask
+            this.showQuestion();
+        } else {
+            // All questions answered, hide modal and send email
+            this.hideQuestionModal();
+            this.emailResults();
+        }
+    }
+    
+    hideQuestionModal() {
+        document.getElementById('question-modal').classList.remove('show');
+    }
+    
     generateEmailContent() {
-        // Only the 3 lines from the todo - no extras
-        return `Questionnaire: yes
-Asked about homework: yes
+        const homeworkAnswer = this.questionAnswers.homework ? 'yes' : 'no';
+        const questionnaireAnswer = this.questionAnswers.questionnaire ? 'yes' : 'no';
+        
+        return `Questionnaire: ${questionnaireAnswer}
+Asked about homework: ${homeworkAnswer}
 Did coding analysis: yes`;
     }
 }

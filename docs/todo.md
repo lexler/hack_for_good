@@ -1,9 +1,9 @@
 # TODO
 
 ## Backend Email
-- [ ] Create email and open it to be sent
-  - RACHEL.4.WILSON@cuanschutz.edu
-- [ ] Sample email
+- [X] Create email and open it to be sent
+  - RACHEL.4.WILSON@cuanschutz.edu 
+Sample email:
 ```
 Questionnaire: yes
 Asked about homework: yes 

@@ -222,6 +222,12 @@ h2 {
     margin-bottom: 10px;
 }
 
+.question-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
 .version-info {
     text-align: center;
     font-size: 12px;
