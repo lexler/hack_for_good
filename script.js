@@ -1,11 +1,20 @@
-// Version 0.0.11
+// Version 0.0.12
 
 // Configuration
-const TIMER_DURATION_SECONDS = 60 * 5; 
+function getTimerDuration() {
+    const isLocalhost = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1';
+    
+    return isLocalhost 
+        ? 10      // 10 seconds for localhost testing
+        : 60 * 5; // 5 minutes for production
+}
+
+const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.11';
+        this.version = '0.0.12';
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
             6: 0, 7: 0, 8: 0, 9: 0
