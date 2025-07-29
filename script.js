@@ -383,8 +383,13 @@ class CounterApp {
         // Add all the behavioral counts in order
         countKeys.forEach((id, index) => {
             data += this.counts[id];
+            
+            // Add an empty line after the first count
+            if (index === 0) {
+                data += '\n\n';
+            }
             // Add newline after all except the last count
-            if (index < countKeys.length - 1) {
+            else if (index < countKeys.length - 1) {
                 data += '\n';
             }
         });
