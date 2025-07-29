@@ -25,6 +25,19 @@ Did coding analysis: yes
 - [ ] Exploration of tablets
 - [ ] Allow config via url
 
+## Reporting Improvement
+Yes/no question is bad.
+- [ ] How many times did you do homework? 0-7 - derive yes/no for that
+- [ ] Actual questionnaire questions asked - derive yes/no from that
+WACB-P: 25
+WACB-N: 17
+ECBI (better not implement)
+
+Number of homework days: 0-7
+
+Questionnaire: yes
+Asked about homework: no
+Did coding analysis: yes
 
 # Bugs
 - [ ] Haptic
