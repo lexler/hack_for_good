@@ -49,3 +49,25 @@ To serve globally: GitHub Pages
 
 ## Design
 Modern and simple styling, mobile-first responsive design optimized for phone usage.
+
+## Features
+
+- **Counting & Tracking**
+  - 8 behavioral tracking buttons (TA, BD, RF, LP, UP, QU, CM, NTA)
+  - One-tap counting with immediate visual feedback
+  - Undo last action with dedicated button (↩️)
+
+- **Input Methods**
+  - Touch/tap on mobile devices
+  - Keyboard shortcuts on desktop (numpad 1-9 matches button layout)
+  - Haptic feedback on supported Android devices
+
+- **Session Management**
+  - Cancel evaluation (reset all counts to zero)
+  - Finish evaluation (view final results summary)
+  - No data saved between sessions
+
+- **Interface & Design**
+  - Full-screen layout optimized for phones
+  - Clean design with abbreviations and full descriptions
+  - Settings panel for session management

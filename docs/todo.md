@@ -2,6 +2,8 @@
 - [ ] Better feedback
   - [ ] Haptic
   - [ ] Color on click?
+- [ ] Timer on the undo button
+  - [ ] Start timer when the first button is clicked (reset resets to 0)
 - [ ] Keyboard shortcuts - same as 9
 - [ ] UI needs to be better
 - [ ] Export to spreadsheet
