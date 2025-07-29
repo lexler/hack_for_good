@@ -1,10 +1,13 @@
 # TODO
-- [ ] Better feedback
-  - [ ] Haptic
-  - [ ] Color on click?
+- [ ] Githook for increase version
+- [ ] Keyboard shortcuts - same as 9
+  - [X] Numpad
+  - [ ] QWE
 - [ ] Timer on the undo button
   - [ ] Start timer when the first button is clicked (reset resets to 0)
-- [ ] Keyboard shortcuts - same as 9
+- [ ] Better feedback
+  - [X] Haptic for chrome
+  - [ ] Color on click?
 - [ ] UI needs to be better
 - [ ] Export to spreadsheet
 - [ ] Version number in the settings
