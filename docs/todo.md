@@ -11,11 +11,11 @@ Did coding analysis: yes
 ```
 
 ## Web App
+- [ ] Export to spreadsheet
 - [ ] Better feedback
   - [X] Haptic for chrome
   - [ ] Color on click?
 - [ ] UI needs to be better
-- [ ] Export to spreadsheet
 - [ ] Version number in the settings
 - [ ] Better labels on her buttons
 - [ ] Send metrics to report

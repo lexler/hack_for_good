@@ -17,7 +17,7 @@ All buttons except for the configuration (button 5) contain a count
 
 ### Button Descriptions
 1. LP (labeled praise)
-2. RF (reflect kid)
+2. RF (reflection)
 3. BD (behavior description)
 4. TA (talk)
 5. - config 

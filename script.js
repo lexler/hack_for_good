@@ -1,4 +1,4 @@
-// Version 0.0.15
+// Version 0.0.16
 
 // Configuration
 function getTimerDuration() {
@@ -14,7 +14,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.15';
+        this.version = '0.0.16';
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
             6: 0, 7: 0, 8: 0, 9: 0
@@ -36,7 +36,7 @@ class CounterApp {
         this.labels = {
             1: 'TA (talk)',
             2: 'BD (behavior description)',
-            3: 'RF (reflect kid)',
+            3: 'RF (reflection)',
             4: 'LP (labeled praise)',
             6: 'UP (unlabeled praise)',
             7: 'QU (question)',
