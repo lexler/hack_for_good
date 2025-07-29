@@ -6,5 +6,5 @@ if ! command -v http-server &> /dev/null; then
     npm install -g http-server
 fi
 
-echo "Starting http-server on port 80..."
-sudo http-server -p 80 -o
+echo "Starting http-server on port 8080..."
+http-server -p 8080 -o
