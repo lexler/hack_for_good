@@ -1,11 +1,4 @@
 # TODO
-- [X] Githook for increase version
-- [ ] Keyboard shortcuts - same as 9
-  - [X] Numpad
-  - [ ] QWE
-- [ ] Timer on the undo button
-  - [ ] Start timer when the first button is clicked (reset resets to 0)
-  - [ ] stops 5 minutes later. No more counting is allowed after this. Suggest several ways to visualize the disabled screen.
 - [ ] Better feedback
   - [X] Haptic for chrome
   - [ ] Color on click?

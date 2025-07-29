@@ -1,11 +1,11 @@
-// Version 0.0.9
+// Version 0.0.10
 
 // Configuration
-const TIMER_DURATION = 60; // seconds
+const TIMER_DURATION_SECONDS = 60 * 5; 
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.9';
+        this.version = '0.0.10';
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
             6: 0, 7: 0, 8: 0, 9: 0
@@ -13,8 +13,8 @@ class CounterApp {
         this.actionHistory = [];
         this.timer = {
             startTime: null,
-            duration: TIMER_DURATION,
-            remaining: TIMER_DURATION,
+            duration: TIMER_DURATION_SECONDS,
+            remaining: TIMER_DURATION_SECONDS,
             isActive: false,
             isExpired: false,
             intervalId: null
