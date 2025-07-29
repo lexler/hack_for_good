@@ -121,6 +121,14 @@ body {
     color: #059669;
 }
 
+.description {
+    font-size: 12px;
+    font-weight: 400;
+    color: #6b7280;
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+
 .modal {
     display: none;
     position: fixed;
