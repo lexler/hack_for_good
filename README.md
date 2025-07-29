@@ -2,6 +2,11 @@
 
 A simple counting app with 8 categories for behavioral tracking.
 
+| App Preview | Quick Access |
+|-------------|--------------|
+| ![App Screenshot](img/current_screenshot.png) | <img src="img/qr-code.svg" width="390" alt="QR Code"> |
+| Live preview of the counter app | Scan to open: [lexler.github.io/hack_for_good](https://lexler.github.io/hack_for_good/) |
+
 ## Features
 
 - 8 counting buttons (LP, RF, BD, TA, UP, NTA, QU, CA)
@@ -22,8 +27,6 @@ Once you push this repository to GitHub, enable GitHub Pages in the repository s
 ```
 https://lexler.github.io/hack_for_good/
 ```
-
-![QR Code](img/qr-code.svg)
 
 ## Usage
 
