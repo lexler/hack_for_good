@@ -27,6 +27,13 @@ All buttons except for the configuration (button 5) contain a count
 9. CM (command)
 The config button is slightly smaller than the others.
 
+### Keyboard
+Using the key pad to enter observations when on desktop.
+Keyboard mapping:
+7 8 9 | TA BD RF
+4 5 6 | LP -  UP
+1 2 3 | QU CM NTA 
+
 #### Config Button
 The config button will pop up a screen on top of the screen with other less used buttons. 
 The four buttons are:

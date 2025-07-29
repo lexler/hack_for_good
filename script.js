@@ -24,6 +24,7 @@ class CounterApp {
     
     init() {
         this.bindEvents();
+        this.bindKeyboardEvents();
     }
     
     bindEvents() {
@@ -136,6 +137,55 @@ class CounterApp {
     hapticFeedback(duration = 30) {
         if ('vibrate' in navigator) {
             navigator.vibrate(duration);
+        }
+    }
+    
+    bindKeyboardEvents() {
+        document.addEventListener('keydown', (e) => {
+            // Only handle keyboard input on main screen (no modals open)
+            const modalsOpen = document.querySelector('.modal.show');
+            if (modalsOpen) return;
+            
+            const keyMap = {
+                '7': '1', // TA
+                '8': '2', // BD  
+                '9': '3', // RF
+                '4': '4', // LP
+                '5': 'undo', // Undo
+                '6': '6', // UP
+                '1': '7', // QU
+                '2': '8', // CM
+                '3': '9'  // NTA
+            };
+            
+            const key = e.key;
+            if (keyMap[key]) {
+                e.preventDefault();
+                
+                if (key === '5') {
+                    // Trigger undo
+                    this.undoLastAction();
+                    this.highlightButton('undo-direct-btn');
+                } else {
+                    // Trigger count increment
+                    const dataId = keyMap[key];
+                    this.incrementCount(parseInt(dataId));
+                    this.highlightButton(`[data-id="${dataId}"]`);
+                }
+            }
+        });
+    }
+    
+    highlightButton(selector) {
+        const button = document.querySelector(selector);
+        if (button) {
+            button.style.transform = 'scale(0.95)';
+            button.style.transition = 'transform 0.1s ease';
+            
+            setTimeout(() => {
+                button.style.transform = '';
+                button.style.transition = '';
+            }, 150);
         }
     }
 }
