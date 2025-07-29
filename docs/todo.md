@@ -24,4 +24,7 @@ Asked about homework: y/n
 Did coding analysis: y/n
 ```
 - [ ]
-- [ ]
+
+# Bugs
+- [ ] Haptic
+- [ ] Double click resizes screen, it should not 
