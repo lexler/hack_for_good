@@ -65,10 +65,11 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: all 0.2s ease;
-    font-size: 24px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 2px;
 }
 
 .undo-button:hover {
@@ -79,6 +80,27 @@ body {
 
 .undo-button:active {
     transform: translateY(0);
+}
+
+.undo-button.disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.undo-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.timer-display {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.timer-display.expired {
+    color: #ef4444;
+    font-weight: 700;
 }
 
 .settings-button {

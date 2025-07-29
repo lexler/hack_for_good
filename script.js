@@ -1,14 +1,24 @@
-// Version 0.0.8
+// Version 0.0.9
 
+// Configuration
+const TIMER_DURATION = 60; // seconds
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.8';
+        this.version = '0.0.9';
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
             6: 0, 7: 0, 8: 0, 9: 0
         };
         this.actionHistory = [];
+        this.timer = {
+            startTime: null,
+            duration: TIMER_DURATION,
+            remaining: TIMER_DURATION,
+            isActive: false,
+            isExpired: false,
+            intervalId: null
+        };
         this.labels = {
             1: 'TA (talk)',
             2: 'BD (behavior description)',
@@ -26,6 +36,7 @@ class CounterApp {
     init() {
         this.bindEvents();
         this.bindKeyboardEvents();
+        this.updateTimerDisplay();
     }
     
     bindEvents() {
@@ -64,6 +75,13 @@ class CounterApp {
     }
     
     incrementCount(id) {
+        if (this.timer.isExpired) return; // Don't allow counting when timer expired
+        
+        // Start timer on first button press
+        if (!this.timer.isActive) {
+            this.startTimer();
+        }
+        
         this.counts[id]++;
         this.actionHistory.push(id);
         this.updateDisplay(id);
@@ -101,6 +119,9 @@ class CounterApp {
             6: 0, 7: 0, 8: 0, 9: 0
         };
         this.actionHistory = [];
+        
+        // Reset timer
+        this.resetTimer();
         
         Object.keys(this.counts).forEach(id => {
             this.updateDisplay(parseInt(id));
@@ -200,6 +221,77 @@ class CounterApp {
                 button.style.transition = '';
             }, 150);
         }
+    }
+    
+    startTimer() {
+        this.timer.startTime = Date.now();
+        this.timer.isActive = true;
+        
+        this.timer.intervalId = setInterval(() => {
+            const elapsed = Math.floor((Date.now() - this.timer.startTime) / 1000);
+            this.timer.remaining = Math.max(0, this.timer.duration - elapsed);
+            
+            this.updateTimerDisplay();
+            
+            if (this.timer.remaining <= 0) {
+                this.expireTimer();
+            }
+        }, 1000);
+    }
+    
+    resetTimer() {
+        if (this.timer.intervalId) {
+            clearInterval(this.timer.intervalId);
+        }
+        
+        this.timer.startTime = null;
+        this.timer.remaining = this.timer.duration;
+        this.timer.isActive = false;
+        this.timer.isExpired = false;
+        this.timer.intervalId = null;
+        
+        this.updateTimerDisplay();
+        this.enableCountingButtons();
+    }
+    
+    expireTimer() {
+        clearInterval(this.timer.intervalId);
+        this.timer.isExpired = true;
+        this.timer.isActive = false;
+        
+        this.updateTimerDisplay();
+        this.disableCountingButtons();
+    }
+    
+    updateTimerDisplay() {
+        const minutes = Math.floor(this.timer.remaining / 60);
+        const seconds = this.timer.remaining % 60;
+        const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
+        const timerElement = document.getElementById('timer-display');
+        timerElement.textContent = timeString;
+        
+        if (this.timer.isExpired) {
+            timerElement.classList.add('expired');
+        } else {
+            timerElement.classList.remove('expired');
+        }
+    }
+    
+    disableCountingButtons() {
+        const countButtons = document.querySelectorAll('.count-button');
+        countButtons.forEach(button => {
+            button.style.opacity = '0.5';
+            button.style.pointerEvents = 'none';
+        });
+    }
+    
+    enableCountingButtons() {
+        const countButtons = document.querySelectorAll('.count-button');
+        countButtons.forEach(button => {
+            button.style.opacity = '';
+            button.style.pointerEvents = '';
+        });
     }
 }
 

@@ -5,6 +5,7 @@
   - [ ] QWE
 - [ ] Timer on the undo button
   - [ ] Start timer when the first button is clicked (reset resets to 0)
+  - [ ] stops 5 minutes later. No more counting is allowed after this. Suggest several ways to visualize the disabled screen.
 - [ ] Better feedback
   - [X] Haptic for chrome
   - [ ] Color on click?
@@ -17,6 +18,7 @@
   - refactor code
   - make testable
 - [ ] Exploration of tablets
+- [ ] Allow config via url
 
 ## Backend Email
 - [ ] Create email and open it to be sent
