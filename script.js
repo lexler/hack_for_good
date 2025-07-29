@@ -157,6 +157,7 @@ class CounterApp {
     }
     
     finishEvaluation() {
+        this.copySessionDataToClipboard();
         this.showResults();
         this.hideConfigModal();
     }
@@ -366,6 +367,116 @@ class CounterApp {
     
     hideQuestionModal() {
         document.getElementById('question-modal').classList.remove('show');
+    }
+    
+    generateSessionData() {
+        const timestamp = new Date().toLocaleString();
+        const sessionDuration = this.timer.duration - this.timer.remaining;
+        const minutes = Math.floor(sessionDuration / 60);
+        const seconds = sessionDuration % 60;
+        const durationString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
+        let data = `Behavioral Observation Session Data\n`;
+        data += `Session completed: ${timestamp}\n`;
+        data += `Session duration: ${durationString}\n\n`;
+        
+        data += `Behavioral Counts:\n`;
+        Object.keys(this.counts).forEach(id => {
+            data += `${this.labels[id]}: ${this.counts[id]}\n`;
+        });
+        
+        data += `\nTotal actions recorded: ${this.actionHistory.length}\n`;
+        
+        // Add question answers if available
+        if (this.questionAnswers.homework !== null || this.questionAnswers.questionnaire !== null) {
+            data += `\nAdditional Information:\n`;
+            if (this.questionAnswers.homework !== null) {
+                data += `Asked about homework: ${this.questionAnswers.homework ? 'yes' : 'no'}\n`;
+            }
+            if (this.questionAnswers.questionnaire !== null) {
+                data += `Questionnaire administered: ${this.questionAnswers.questionnaire ? 'yes' : 'no'}\n`;
+            }
+        }
+        
+        data += `\nVersion: ${this.version}`;
+        
+        return data;
+    }
+    
+    async copySessionDataToClipboard() {
+        console.log('copySessionDataToClipboard called');
+        const sessionData = this.generateSessionData();
+        console.log('Session data generated:', sessionData);
+        
+        const finishBtn = document.getElementById('finish-btn');
+        if (!finishBtn) {
+            console.error('Finish button not found');
+            return;
+        }
+        
+        const originalText = finishBtn.textContent;
+        const originalBgColor = finishBtn.style.backgroundColor;
+        
+        try {
+            // Check if clipboard API is available
+            if (!navigator.clipboard) {
+                throw new Error('Clipboard API not available');
+            }
+            
+            await navigator.clipboard.writeText(sessionData);
+            console.log('Successfully copied to clipboard');
+            
+            // Show visual feedback
+            finishBtn.textContent = 'Copied!';
+            finishBtn.style.backgroundColor = '#28a745';
+            
+            // Reset button appearance after 2 seconds
+            setTimeout(() => {
+                finishBtn.textContent = originalText;
+                finishBtn.style.backgroundColor = originalBgColor;
+            }, 2000);
+            
+        } catch (err) {
+            console.error('Clipboard copy failed:', err);
+            
+            // Fallback: try older execCommand method
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = sessionData;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.select();
+                const success = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (success) {
+                    console.log('Successfully copied using execCommand fallback');
+                    finishBtn.textContent = 'Copied!';
+                    finishBtn.style.backgroundColor = '#28a745';
+                    
+                    setTimeout(() => {
+                        finishBtn.textContent = originalText;
+                        finishBtn.style.backgroundColor = originalBgColor;
+                    }, 2000);
+                } else {
+                    throw new Error('execCommand copy failed');
+                }
+            } catch (fallbackErr) {
+                console.error('Fallback copy also failed:', fallbackErr);
+                
+                // Final fallback: show alert with data
+                finishBtn.textContent = 'Copy Failed';
+                finishBtn.style.backgroundColor = '#dc3545';
+                
+                setTimeout(() => {
+                    finishBtn.textContent = originalText;
+                    finishBtn.style.backgroundColor = originalBgColor;
+                }, 2000);
+                
+                alert('Clipboard copy failed. Here is your session data:\n\n' + sessionData);
+            }
+        }
     }
     
     generateEmailContent() {
