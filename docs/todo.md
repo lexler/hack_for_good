@@ -1,4 +1,16 @@
 # TODO
+
+## Backend Email
+- [ ] Create email and open it to be sent
+  - RACHEL.4.WILSON@cuanschutz.edu
+- [ ] Sample email
+```
+Questionnaire: yes
+Asked about homework: yes 
+Did coding analysis: yes
+```
+
+## Web App
 - [ ] Better feedback
   - [X] Haptic for chrome
   - [ ] Color on click?
@@ -13,17 +25,6 @@
 - [ ] Exploration of tablets
 - [ ] Allow config via url
 
-## Backend Email
-- [ ] Create email and open it to be sent
-- [ ] Sample email
-```
-FROM: clinic name (license number)
-
-Questionnaire: y/n
-Asked about homework: y/n 
-Did coding analysis: y/n
-```
-- [ ]
 
 # Bugs
 - [ ] Haptic
