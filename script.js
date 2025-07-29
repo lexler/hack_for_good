@@ -62,6 +62,7 @@ class CounterApp {
         this.counts[id]++;
         this.actionHistory.push(id);
         this.updateDisplay(id);
+        this.hapticFeedback();
     }
     
     updateDisplay(id) {
@@ -85,6 +86,7 @@ class CounterApp {
         this.counts[lastAction]--;
         this.updateDisplay(lastAction);
         this.hideConfigModal();
+        this.hapticFeedback(50);
     }
     
     cancelEvaluation() {
@@ -125,6 +127,12 @@ class CounterApp {
     
     hideResultsModal() {
         document.getElementById('results-modal').classList.remove('show');
+    }
+    
+    hapticFeedback(duration = 30) {
+        if ('vibrate' in navigator) {
+            navigator.vibrate(duration);
+        }
     }
 }
 
