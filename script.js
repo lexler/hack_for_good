@@ -1,8 +1,8 @@
-// Version 0.0.3
+// Version 0.0.4
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.3';
+        this.version = '0.0.4';
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
             6: 0, 7: 0, 8: 0, 9: 0
