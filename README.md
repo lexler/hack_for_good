@@ -23,6 +23,8 @@ Once you push this repository to GitHub, enable GitHub Pages in the repository s
 https://[username].github.io/[repository-name]
 ```
 
+![QR Code](img/qr-code.svg)
+
 ## Usage
 
 1. Tap any of the 8 counting buttons to increment that category
