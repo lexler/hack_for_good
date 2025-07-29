@@ -1,9 +1,9 @@
-// Version 0.0.7
+// Version 0.0.8
 
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.7';
+        this.version = '0.0.8';
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
             6: 0, 7: 0, 8: 0, 9: 0
@@ -148,6 +148,7 @@ class CounterApp {
             if (modalsOpen) return;
             
             const keyMap = {
+                // Numpad mapping
                 '7': '1', // TA
                 '8': '2', // BD  
                 '9': '3', // RF
@@ -156,14 +157,25 @@ class CounterApp {
                 '6': '6', // UP
                 '1': '7', // QU
                 '2': '8', // CM
-                '3': '9'  // NTA
+                '3': '9', // NTA
+                
+                // QWE mapping  
+                'q': '1', 'Q': '1', // TA
+                'w': '2', 'W': '2', // BD
+                'e': '3', 'E': '3', // RF
+                'a': '4', 'A': '4', // LP
+                's': 'undo', 'S': 'undo', // Undo
+                'd': '6', 'D': '6', // UP
+                'z': '7', 'Z': '7', // QU
+                'x': '8', 'X': '8', // CM
+                'c': '9', 'C': '9'  // NTA
             };
             
             const key = e.key;
             if (keyMap[key]) {
                 e.preventDefault();
                 
-                if (key === '5') {
+                if (key === '5' || key === 's' || key === 'S') {
                     // Trigger undo
                     this.undoLastAction();
                     this.highlightButton('undo-direct-btn');

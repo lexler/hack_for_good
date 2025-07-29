@@ -1,5 +1,5 @@
 # TODO
-- [ ] Githook for increase version
+- [X] Githook for increase version
 - [ ] Keyboard shortcuts - same as 9
   - [X] Numpad
   - [ ] QWE
