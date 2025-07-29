@@ -20,7 +20,7 @@ Run the app locally on port 80:
 
 Once you push this repository to GitHub, enable GitHub Pages in the repository settings and the app will be available at:
 ```
-https://[username].github.io/[repository-name]
+https://github.com/lexler/hack_for_good
 ```
 
 ![QR Code](img/qr-code.svg)
