@@ -1,4 +1,4 @@
-// Version 0.0.48
+// Version 0.0.50
 
 // Configuration
 function getTimerDuration() {
@@ -14,7 +14,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.48';
+        this.version = '0.0.50';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -27,6 +27,8 @@ class CounterApp {
             ecbiScore: null,
             didNotAdminister: false
         };
+        this.isSkipCoding = false;
+        this.isTeachingSession = null;
         this.timer = {
             startTime: null,
             duration: TIMER_DURATION_SECONDS,
@@ -100,6 +102,18 @@ class CounterApp {
         
         document.getElementById('did-not-administer').addEventListener('change', (e) => {
             this.toggleScoreInput(e.target.checked);
+        });
+        
+        document.getElementById('skip-coding-btn').addEventListener('click', () => {
+            this.startSkipCodingFlow();
+        });
+        
+        document.getElementById('teaching-yes-btn').addEventListener('click', () => {
+            this.handleTeachingSessionAnswer(true);
+        });
+        
+        document.getElementById('teaching-no-btn').addEventListener('click', () => {
+            this.handleTeachingSessionAnswer(false);
         });
     }
     
@@ -393,6 +407,25 @@ class CounterApp {
         document.getElementById('combined-modal').classList.remove('show');
     }
     
+    startSkipCodingFlow() {
+        this.isSkipCoding = true;
+        this.hideConfigModal();
+        document.getElementById('teaching-session-modal').classList.add('show');
+    }
+    
+    handleTeachingSessionAnswer(isTeaching) {
+        this.isTeachingSession = isTeaching;
+        document.getElementById('teaching-session-modal').classList.remove('show');
+        this.showSkipCodingModal();
+    }
+    
+    showSkipCodingModal() {
+        const sessionType = this.isTeachingSession ? 'Teaching Session only' : 'Alternative Session';
+        this.populateAlternativeSummary(sessionType);
+        this.resetQuestionForm();
+        document.getElementById('combined-modal').classList.add('show');
+    }
+    
     toggleDaysInput(isChecked) {
         const input = document.getElementById('days-practiced');
         input.disabled = isChecked;
@@ -554,6 +587,13 @@ class CounterApp {
     }
     
     generateEmailContent() {
+        if (this.isSkipCoding) {
+            const teachingAnswer = this.isTeachingSession ? 'yes' : 'no';
+            return `Questionnaire: no
+Asked about homework: no
+Did coding analysis: ${teachingAnswer}`;
+        }
+        
         const homeworkAnswer = this.questionAnswers.didNotCollect ? 'no' : 'yes';
         const questionnaireAnswer = this.questionAnswers.didNotAdminister ? 'no' : 'yes';
         

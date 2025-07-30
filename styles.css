@@ -380,6 +380,14 @@ body {
     border-bottom: none;
 }
 
+.alternative-session {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #059669;
+    padding: 20px 0;
+}
+
 @media (max-width: 768px) {
     .modal-sections {
         flex-direction: column;
