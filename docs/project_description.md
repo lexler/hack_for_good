@@ -69,12 +69,11 @@ Modern and simple styling, mobile-first responsive design optimized for phone us
 
 - **Data Export**
   - Copy session data to clipboard automatically when finishing evaluation
-  - Format: Behavioral counts as numbers, one per line with empty line after first count
+  - Format: Behavioral counts as numbers, one per line
   - **Input Example**: TA=3, BD=2, RF=1, LP=4, UP=6, QU=0, CM=1, NTA=0
   - **Output Example**: 
     ```
     3
-
     2
     1
     4
