@@ -17,14 +17,14 @@ Did coding analysis: yes
   - [X] Haptic for chrome
   - [X] Color on click
 - [X] Better button colors by default
-- [ ] UI needs to be better
-- [ ] Version number in the settings
-- [ ] Better labels on her buttons
-- [ ] Send metrics to report
+- [X] UI needs to be better
+- [X] Version number in the settings
+- [X] Better labels on her buttons
+- [X] Send metrics to report
 - [ ] Code
   - refactor code
   - make testable
-- [ ] Exploration of tablets
+- [X] Exploration of tablets
 - [ ] Allow config via url
 
 ## Reporting Improvement
@@ -42,5 +42,4 @@ Asked about homework: no
 Did coding analysis: yes
 
 # Bugs
-- [ ] Haptic
-- [ ] Double click resizes screen, it should not 
+- [X] Double click resizes screen, it should not 
