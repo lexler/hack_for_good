@@ -1,4 +1,4 @@
-// Version 0.0.41
+// Version 0.0.43
 
 // Configuration
 function getTimerDuration() {
@@ -14,7 +14,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.41';
+        this.version = '0.0.43';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -452,11 +452,23 @@ class CounterApp {
         countKeys.forEach((id, index) => {
             data += this.counts[id];
             
-            // Add newline after all except the last count
+            // Add newline after all counts
             if (index < countKeys.length - 1) {
                 data += '\n';
             }
         });
+        
+        // Add days practiced (number or blank line)
+        data += '\n';
+        if (this.questionAnswers.daysPracticed !== null && !this.questionAnswers.didNotCollect) {
+            data += this.questionAnswers.daysPracticed;
+        }
+        
+        // Add ECBI/WACB score (number or blank line)
+        data += '\n';
+        if (this.questionAnswers.ecbiScore !== null && !this.questionAnswers.didNotAdminister) {
+            data += this.questionAnswers.ecbiScore;
+        }
         
         return data;
     }
