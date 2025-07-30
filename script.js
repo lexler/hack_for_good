@@ -1,4 +1,4 @@
-// Version 0.0.29
+// Version 0.0.30
 
 // Configuration
 function getTimerDuration() {
@@ -14,7 +14,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.29';
+        this.version = '0.0.30';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -22,10 +22,11 @@ class CounterApp {
         };
         this.actionHistory = [];
         this.questionAnswers = {
-            homework: null,
-            questionnaire: null
+            daysPracticed: null,
+            didNotCollect: false,
+            ecbiScore: null,
+            didNotAdminister: false
         };
-        this.currentQuestion = 0;
         this.timer = {
             startTime: null,
             duration: TIMER_DURATION_SECONDS,
@@ -85,20 +86,20 @@ class CounterApp {
             this.finishEvaluation();
         });
         
-        document.getElementById('results-return-btn').addEventListener('click', () => {
-            this.hideResultsModal();
+        document.getElementById('combined-return-btn').addEventListener('click', () => {
+            this.hideCombinedModal();
         });
         
-        document.getElementById('email-results-btn').addEventListener('click', () => {
-            this.startQuestionFlow();
+        document.getElementById('copy-email-btn').addEventListener('click', () => {
+            this.processCombinedForm();
         });
         
-        document.getElementById('yes-btn').addEventListener('click', () => {
-            this.answerQuestion(true);
+        document.getElementById('did-not-collect').addEventListener('change', (e) => {
+            this.toggleDaysInput(e.target.checked);
         });
         
-        document.getElementById('no-btn').addEventListener('click', () => {
-            this.answerQuestion(false);
+        document.getElementById('did-not-administer').addEventListener('change', (e) => {
+            this.toggleScoreInput(e.target.checked);
         });
     }
     
@@ -194,31 +195,10 @@ class CounterApp {
     }
     
     finishEvaluation() {
-        this.copySessionDataToClipboard();
-        this.showResults();
+        this.showCombinedModal();
         this.hideConfigModal();
     }
     
-    showResults() {
-        const resultsList = document.getElementById('results-list');
-        resultsList.innerHTML = '';
-        
-        Object.keys(this.counts).forEach(id => {
-            const resultItem = document.createElement('div');
-            resultItem.className = 'result-item';
-            resultItem.innerHTML = `
-                <span>${this.labels[id]}</span>
-                <span>${this.counts[id]}</span>
-            `;
-            resultsList.appendChild(resultItem);
-        });
-        
-        document.getElementById('results-modal').classList.add('show');
-    }
-    
-    hideResultsModal() {
-        document.getElementById('results-modal').classList.remove('show');
-    }
     
     hapticFeedback(duration = 30) {
         if ('vibrate' in navigator) {
@@ -367,43 +347,94 @@ class CounterApp {
         window.location.href = mailtoUrl;
     }
     
-    startQuestionFlow() {
-        this.currentQuestion = 0;
-        this.questionAnswers = { homework: null, questionnaire: null };
-        this.showQuestion();
-    }
     
-    showQuestion() {
-        const questions = [
-            "Did you ask about homework?",
-            "Did you administer the questionnaire?"
-        ];
+    showCombinedModal() {
+        // Populate summary section
+        const summaryList = document.getElementById('summary-list');
+        summaryList.innerHTML = '';
         
-        document.getElementById('question-text').textContent = questions[this.currentQuestion];
-        document.getElementById('question-modal').classList.add('show');
+        Object.keys(this.counts).forEach(id => {
+            const resultItem = document.createElement('div');
+            resultItem.className = 'result-item';
+            resultItem.innerHTML = `
+                <span>${this.labels[id]}</span>
+                <span>${this.counts[id]}</span>
+            `;
+            summaryList.appendChild(resultItem);
+        });
+        
+        // Reset form
+        document.getElementById('days-practiced').value = '';
+        document.getElementById('ecbi-score').value = '';
+        document.getElementById('did-not-collect').checked = false;
+        document.getElementById('did-not-administer').checked = false;
+        document.getElementById('days-practiced').disabled = false;
+        document.getElementById('ecbi-score').disabled = false;
+        document.getElementById('validation-error').style.display = 'none';
+        
+        document.getElementById('combined-modal').classList.add('show');
     }
     
-    answerQuestion(answer) {
-        if (this.currentQuestion === 0) {
-            this.questionAnswers.homework = answer;
-        } else if (this.currentQuestion === 1) {
-            this.questionAnswers.questionnaire = answer;
+    hideCombinedModal() {
+        document.getElementById('combined-modal').classList.remove('show');
+    }
+    
+    toggleDaysInput(isChecked) {
+        const input = document.getElementById('days-practiced');
+        input.disabled = isChecked;
+        if (isChecked) {
+            input.value = '';
+        }
+    }
+    
+    toggleScoreInput(isChecked) {
+        const input = document.getElementById('ecbi-score');
+        input.disabled = isChecked;
+        if (isChecked) {
+            input.value = '';
+        }
+    }
+    
+    validateForm() {
+        const daysInput = document.getElementById('days-practiced');
+        const scoreInput = document.getElementById('ecbi-score');
+        const didNotCollect = document.getElementById('did-not-collect').checked;
+        const didNotAdminister = document.getElementById('did-not-administer').checked;
+        
+        const daysValid = didNotCollect || (daysInput.value !== '' && !isNaN(daysInput.value));
+        const scoreValid = didNotAdminister || (scoreInput.value !== '' && !isNaN(scoreInput.value));
+        
+        if (!daysValid || !scoreValid) {
+            const errorDiv = document.getElementById('validation-error');
+            errorDiv.textContent = 'Please fill in each field or check the corresponding checkbox.';
+            errorDiv.style.display = 'block';
+            return false;
         }
         
-        this.currentQuestion++;
-        
-        if (this.currentQuestion < 2) {
-            // More questions to ask
-            this.showQuestion();
-        } else {
-            // All questions answered, hide modal and send email
-            this.hideQuestionModal();
-            this.emailResults();
-        }
+        document.getElementById('validation-error').style.display = 'none';
+        return true;
     }
     
-    hideQuestionModal() {
-        document.getElementById('question-modal').classList.remove('show');
+    processCombinedForm() {
+        if (!this.validateForm()) {
+            return;
+        }
+        
+        // Store the question answers
+        const daysInput = document.getElementById('days-practiced');
+        const scoreInput = document.getElementById('ecbi-score');
+        
+        this.questionAnswers.daysPracticed = document.getElementById('did-not-collect').checked ? null : parseInt(daysInput.value);
+        this.questionAnswers.didNotCollect = document.getElementById('did-not-collect').checked;
+        this.questionAnswers.ecbiScore = document.getElementById('did-not-administer').checked ? null : parseInt(scoreInput.value);
+        this.questionAnswers.didNotAdminister = document.getElementById('did-not-administer').checked;
+        
+        // Copy to clipboard and send email
+        this.copySessionDataToClipboard();
+        this.emailResults();
+        
+        // Hide modal
+        this.hideCombinedModal();
     }
     
     generateSessionData() {
@@ -501,11 +532,11 @@ class CounterApp {
     }
     
     generateEmailContent() {
-        const homeworkAnswer = this.questionAnswers.homework ? 'yes' : 'no';
-        const questionnaireAnswer = this.questionAnswers.questionnaire ? 'yes' : 'no';
+        const daysText = this.questionAnswers.didNotCollect ? 'Did not collect' : this.questionAnswers.daysPracticed;
+        const scoreText = this.questionAnswers.didNotAdminister ? 'Did not administer' : this.questionAnswers.ecbiScore;
         
-        return `Questionnaire: ${questionnaireAnswer}
-Asked about homework: ${homeworkAnswer}
+        return `Number of days practiced: ${daysText}
+ECBI/WACB score: ${scoreText}
 Did coding analysis: yes`;
     }
 }

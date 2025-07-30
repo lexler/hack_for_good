@@ -69,26 +69,41 @@
             <button class="modal-button" id="return-btn">Return</button>
             <button class="modal-button" id="cancel-btn">Cancel Evaluation</button>
             <button class="modal-button" id="finish-btn">Finish Evaluation</button>
-            <div class="version-info" id="version-info">Version 0.0.29</div>
+            <div class="version-info" id="version-info">Version 0.0.30</div>
         </div>
     </div>
 
-    <div class="modal" id="results-modal">
-        <div class="modal-content">
-            <h2>Evaluation Results</h2>
-            <div id="results-list"></div>
-            <button class="modal-button" id="email-results-btn">Email Results</button>
-            <button class="modal-button" id="results-return-btn">Return</button>
-        </div>
-    </div>
-
-    <div class="modal" id="question-modal">
-        <div class="modal-content">
-            <h2 id="question-text">Did you ask about homework?</h2>
-            <div class="question-buttons">
-                <button class="modal-button" id="yes-btn">Yes</button>
-                <button class="modal-button" id="no-btn">No</button>
+    <div class="modal" id="combined-modal">
+        <div class="modal-content combined-content">
+            <h2>Session Results</h2>
+            <div class="modal-sections">
+                <div class="summary-section">
+                    <h3>Summary</h3>
+                    <div id="summary-list"></div>
+                </div>
+                <div class="question-section">
+                    <h3>Question subpanel</h3>
+                    <div class="question-item">
+                        <label>1. Number of days practiced</label>
+                        <input type="number" id="days-practiced" min="0" max="7" placeholder="0-7">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="did-not-collect">
+                            <label for="did-not-collect">Did not collect</label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <label>2. ECBI/WACB score:</label>
+                        <input type="number" id="ecbi-score" min="0" placeholder="Score">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="did-not-administer">
+                            <label for="did-not-administer">Did not administer</label>
+                        </div>
+                    </div>
+                    <div id="validation-error" class="error-message" style="display: none;"></div>
+                </div>
             </div>
+            <button class="modal-button primary" id="copy-email-btn">COPY & EMAIL RESULTS</button>
+            <button class="modal-button" id="combined-return-btn">Return</button>
         </div>
     </div>
 
