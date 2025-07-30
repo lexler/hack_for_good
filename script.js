@@ -157,6 +157,7 @@ class CounterApp {
     }
     
     finishEvaluation() {
+        this.copySessionDataToClipboard();
         this.showResults();
         this.hideConfigModal();
     }
@@ -366,6 +367,100 @@ class CounterApp {
     
     hideQuestionModal() {
         document.getElementById('question-modal').classList.remove('show');
+    }
+    
+    generateSessionData() {
+        const timestamp = new Date().toLocaleString();
+        const sessionDuration = this.timer.duration - this.timer.remaining;
+        const minutes = Math.floor(sessionDuration / 60);
+        const seconds = sessionDuration % 60;
+        const durationString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
+        // Output just the behavioral counts, one per line
+        let data = '';
+        const countKeys = Object.keys(this.counts);
+        
+        // Add all the behavioral counts in order
+        countKeys.forEach((id, index) => {
+            data += this.counts[id];
+            
+            // Add an empty line after the first count
+            if (index === 0) {
+                data += '\n\n';
+            }
+            // Add newline after all except the last count
+            else if (index < countKeys.length - 1) {
+                data += '\n';
+            }
+        });
+        
+        return data;
+    }
+    
+    showToast(message, isError = false) {
+        const toast = document.getElementById('toast');
+        if (!toast) return;
+        
+        // Set message and style
+        toast.textContent = message;
+        toast.className = 'toast';
+        
+        if (isError) {
+            toast.classList.add('error');
+        }
+        
+        // Show the toast
+        setTimeout(() => toast.classList.add('show'), 10);
+        
+        // Hide after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+    
+    async copySessionDataToClipboard() {
+        console.log('copySessionDataToClipboard called');
+        const sessionData = this.generateSessionData();
+        console.log('Session data generated:', sessionData);
+        
+        try {
+            // Check if clipboard API is available
+            if (!navigator.clipboard) {
+                throw new Error('Clipboard API not available');
+            }
+            
+            await navigator.clipboard.writeText(sessionData);
+            console.log('Successfully copied to clipboard');
+            this.showToast('Session data copied to clipboard!');
+            
+        } catch (err) {
+            console.error('Clipboard copy failed:', err);
+            
+            // Fallback: try older execCommand method
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = sessionData;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.select();
+                const success = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (success) {
+                    console.log('Successfully copied using execCommand fallback');
+                    this.showToast('Session data copied to clipboard!');
+                } else {
+                    throw new Error('execCommand copy failed');
+                }
+            } catch (fallbackErr) {
+                console.error('Fallback copy also failed:', fallbackErr);
+                this.showToast('Failed to copy to clipboard', true);
+                
+                // As a last resort, show the data in an alert
+                alert('Clipboard copy failed. Here is your session data:\n\n' + sessionData);
+            }
+        }
     }
     
     generateEmailContent() {
