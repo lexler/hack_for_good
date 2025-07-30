@@ -1,4 +1,4 @@
-// Version 0.0.46
+// Version 0.0.48
 
 // Configuration
 function getTimerDuration() {
@@ -14,7 +14,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.46';
+        this.version = '0.0.48';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -349,7 +349,12 @@ class CounterApp {
     
     
     showCombinedModal() {
-        // Populate summary section
+        this.populateNormalSummary();
+        this.resetQuestionForm();
+        document.getElementById('combined-modal').classList.add('show');
+    }
+    
+    populateNormalSummary() {
         const summaryList = document.getElementById('summary-list');
         summaryList.innerHTML = '';
         
@@ -362,8 +367,19 @@ class CounterApp {
             `;
             summaryList.appendChild(resultItem);
         });
+    }
+    
+    populateAlternativeSummary(sessionType) {
+        const summaryList = document.getElementById('summary-list');
+        summaryList.innerHTML = '';
         
-        // Reset form
+        const resultItem = document.createElement('div');
+        resultItem.className = 'result-item alternative-session';
+        resultItem.innerHTML = `<span>${sessionType}</span>`;
+        summaryList.appendChild(resultItem);
+    }
+    
+    resetQuestionForm() {
         document.getElementById('days-practiced').value = '';
         document.getElementById('ecbi-score').value = '';
         document.getElementById('did-not-collect').checked = false;
@@ -371,8 +387,6 @@ class CounterApp {
         document.getElementById('days-practiced').disabled = false;
         document.getElementById('ecbi-score').disabled = false;
         document.getElementById('validation-error').style.display = 'none';
-        
-        document.getElementById('combined-modal').classList.add('show');
     }
     
     hideCombinedModal() {

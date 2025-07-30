@@ -63,11 +63,17 @@ Modern and simple styling, mobile-first responsive design optimized for phone us
   - Haptic feedback on supported Android devices
 
 - **Session Management**
-  - Settings panel with Return, Cancel, Finish options
+  - Settings panel with Return, Cancel, Finish, and Skip Coding options
   - Cancel evaluation (reset all counts to zero)
   - Finish evaluation (view final results summary)
   - Version display in settings
   - No data saved between sessions
+
+- **Skip Coding**
+  - When the user hits skip coding, they are prompted with the button that asks 'Did you do a teaching session?' (yes/no)
+    On pressing either of those, you're taken to a variation of a summary screen where the summary is blank and replaced
+    by either the words 'Alternative Session' or 'Teaching Session only' (don't mess up the original summary screen, it should be a new panel).
+  - When the email is sent, the true/false will be based on whether or not there was a teaching session only (true), or if they did an alternative session (false).
 
 - **Data Export**
   - Copy session data to clipboard automatically when finishing evaluation
