@@ -2,7 +2,8 @@
 
 ## Backend Email
 - [X] Create email and open it to be sent
-  - RACHEL.4.WILSON@cuanschutz.edu 
+  - RACHEL.4.WILSON@cuanschutz.edu
+    [PCIT Intermediary] 
 Sample email:
 ```
 Questionnaire: yes
@@ -11,6 +12,7 @@ Did coding analysis: yes
 ```
 
 ## Web App
+- [ ] Fix the header for the email to be [PCIT Intermediary]
 - [ ] Export to spreadsheet
 - [ ] Better feedback
   - [X] Haptic for chrome
