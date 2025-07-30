@@ -63,8 +63,10 @@ Modern and simple styling, mobile-first responsive design optimized for phone us
   - Haptic feedback on supported Android devices
 
 - **Session Management**
+  - Settings panel with Return, Cancel, Finish options
   - Cancel evaluation (reset all counts to zero)
   - Finish evaluation (view final results summary)
+  - Version display in settings
   - No data saved between sessions
 
 - **Data Export**
@@ -97,7 +99,7 @@ Modern and simple styling, mobile-first responsive design optimized for phone us
 
 
     ```
-
+    
 - **Interface & Design**
   - Full-screen layout optimized for phones
   - Clean design with abbreviations and full descriptions
