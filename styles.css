@@ -43,6 +43,7 @@ body {
     justify-content: center;
     font-size: 16px;
     font-weight: 600;
+    touch-action: manipulation;
 }
 
 /* Green buttons - TA, BD, RF */
@@ -128,6 +129,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 2px;
+    touch-action: manipulation;
 }
 
 .undo-button.start-state {
@@ -200,6 +202,7 @@ body {
     justify-content: center;
     height: 60px;
     width: 100%;
+    touch-action: manipulation;
 }
 
 .settings-button:hover {
@@ -394,6 +397,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s ease;
+    touch-action: manipulation;
 }
 
 .modal-button:hover {
