@@ -149,14 +149,16 @@ body {
 }
 
 .undo-icon {
-    font-size: 20px;
+    font-size: 24px;
     line-height: 1;
+    margin-bottom: 4px;
 }
 
 .timer-display {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 500;
     line-height: 1;
+    color: white;
 }
 
 .timer-display.expired {
@@ -192,22 +194,22 @@ body {
 }
 
 .label {
-    font-size: 18px;
-    font-weight: 700;
-    color: #374151;
-    margin-bottom: 8px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #111827;
+    margin-bottom: 4px;
 }
 
 .count {
-    font-size: 32px;
-    font-weight: 800;
-    color: #059669;
+    font-size: 48px;
+    font-weight: 500;
+    color: #000000;
 }
 
 .description {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
-    color: #6b7280;
+    color: #000000;
     margin-top: 2px;
     margin-bottom: 4px;
 }
