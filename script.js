@@ -1,4 +1,4 @@
-// Version 0.0.37
+// Version 0.0.39
 
 // Configuration
 function getTimerDuration() {
@@ -14,7 +14,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.37';
+        this.version = '0.0.39';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -452,12 +452,8 @@ class CounterApp {
         countKeys.forEach((id, index) => {
             data += this.counts[id];
             
-            // Add an empty line after the first count
-            if (index === 0) {
-                data += '\n\n';
-            }
             // Add newline after all except the last count
-            else if (index < countKeys.length - 1) {
+            if (index < countKeys.length - 1) {
                 data += '\n';
             }
         });
