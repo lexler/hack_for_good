@@ -69,9 +69,9 @@ Modern and simple styling, mobile-first responsive design optimized for phone us
 
 - **Data Export**
   - Copy session data to clipboard automatically when finishing evaluation
-  - Format: Behavioral counts as numbers, one per line
-  - **Input Example**: TA=3, BD=2, RF=1, LP=4, UP=6, QU=0, CM=1, NTA=0
-  - **Output Example**: 
+  - Format: Behavioral counts as numbers (8 lines), then days practiced, then ECBI/WACB score
+  - **Input Example**: TA=3, BD=2, RF=1, LP=4, UP=6, QU=0, CM=1, NTA=0, Days=5, Score=85
+  - **Output Example (both values entered)**: 
     ```
     3
     2
@@ -81,6 +81,21 @@ Modern and simple styling, mobile-first responsive design optimized for phone us
     0
     1
     0
+    5
+    85
+    ```
+  - **Output Example (both checkboxes checked - "Did not collect" and "Did not administer")**: 
+    ```
+    3
+    2
+    1
+    4
+    6
+    0
+    1
+    0
+
+
     ```
 
 - **Interface & Design**
