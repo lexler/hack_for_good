@@ -1,4 +1,4 @@
-// Version 0.0.18
+// Version 0.0.19
 
 // Configuration
 function getTimerDuration() {
@@ -14,7 +14,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.18';
+        this.version = '0.0.19';
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
             6: 0, 7: 0, 8: 0, 9: 0
@@ -323,7 +323,7 @@ class CounterApp {
     
     emailResults() {
         const emailContent = this.generateEmailContent();
-        const subject = encodeURIComponent("Behavioral Observation Results");
+        const subject = encodeURIComponent("[PCIT Intermediary]");
         const body = encodeURIComponent(emailContent);
         const mailtoUrl = `mailto:RACHEL.4.WILSON@cuanschutz.edu?subject=${subject}&body=${body}`;
         
