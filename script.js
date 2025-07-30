@@ -1,4 +1,4 @@
-// Version 0.0.25
+// Version 0.0.26
 
 // Configuration
 function getTimerDuration() {
@@ -14,7 +14,8 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.25';
+        this.version = '0.0.26';
+        this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
             6: 0, 7: 0, 8: 0, 9: 0
@@ -51,6 +52,7 @@ class CounterApp {
         this.bindEvents();
         this.bindKeyboardEvents();
         this.updateTimerDisplay();
+        this.updateButtonState();
     }
     
     bindEvents() {
@@ -103,10 +105,13 @@ class CounterApp {
     incrementCount(id) {
         if (this.timer.isExpired) return; // Don't allow counting when timer expired
         
-        // Start timer on first button press
-        if (!this.timer.isActive) {
+        // Start timer on first button press (only if already started)
+        if (!this.timer.isActive && this.isStarted) {
             this.startTimer();
         }
+        
+        // Don't allow counting until started
+        if (!this.isStarted) return;
         
         this.counts[id]++;
         this.actionHistory.push(id);
@@ -130,6 +135,15 @@ class CounterApp {
     }
     
     undoLastAction() {
+        if (!this.isStarted) {
+            // Start button clicked
+            this.isStarted = true;
+            this.startTimer();
+            this.updateButtonState();
+            this.hapticFeedback(50);
+            return;
+        }
+        
         if (this.actionHistory.length === 0) return;
         
         const lastAction = this.actionHistory.pop();
@@ -139,12 +153,34 @@ class CounterApp {
         this.hapticFeedback(50);
     }
     
+    updateButtonState() {
+        const button = document.getElementById('undo-direct-btn');
+        const buttonText = document.getElementById('button-text');
+        const undoIcon = document.getElementById('undo-icon');
+        const playIcon = document.getElementById('play-icon');
+        
+        if (!this.isStarted) {
+            // Start state
+            button.classList.add('start-state');
+            buttonText.textContent = 'Start';
+            undoIcon.style.display = 'none';
+            playIcon.style.display = 'block';
+        } else {
+            // Undo state
+            button.classList.remove('start-state');
+            buttonText.textContent = 'Undo';
+            undoIcon.style.display = 'block';
+            playIcon.style.display = 'none';
+        }
+    }
+    
     cancelEvaluation() {
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
             6: 0, 7: 0, 8: 0, 9: 0
         };
         this.actionHistory = [];
+        this.isStarted = false;
         
         // Reset timer
         this.resetTimer();
@@ -153,6 +189,7 @@ class CounterApp {
             this.updateDisplay(parseInt(id));
         });
         
+        this.updateButtonState();
         this.hideConfigModal();
     }
     
@@ -224,7 +261,7 @@ class CounterApp {
                 e.preventDefault();
                 
                 if (key === '5' || key === 's' || key === 'S') {
-                    // Trigger undo
+                    // Trigger start/undo
                     this.undoLastAction();
                     this.highlightButton('undo-direct-btn');
                 } else {

@@ -130,6 +130,17 @@ body {
     gap: 2px;
 }
 
+.undo-button.start-state {
+    border-color: rgb(34, 197, 94) !important;
+    background: rgb(34, 197, 94) !important;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2) !important;
+}
+
+.undo-button.start-state:hover {
+    background: rgb(22, 163, 74) !important;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3) !important;
+}
+
 .undo-button:hover {
     background: rgb(59, 130, 246);
     transform: translateY(-2px);
@@ -148,7 +159,7 @@ body {
     opacity: 0.5;
 }
 
-.undo-icon {
+.undo-icon, .play-icon {
     width: 48px;
     height: 48px;
     color: white;
