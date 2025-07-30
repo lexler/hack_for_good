@@ -1,4 +1,4 @@
-// Version 0.0.30
+// Version 0.0.34
 
 // Configuration
 function getTimerDuration() {
@@ -14,7 +14,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.30';
+        this.version = '0.0.34';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -532,11 +532,11 @@ class CounterApp {
     }
     
     generateEmailContent() {
-        const daysText = this.questionAnswers.didNotCollect ? 'Did not collect' : this.questionAnswers.daysPracticed;
-        const scoreText = this.questionAnswers.didNotAdminister ? 'Did not administer' : this.questionAnswers.ecbiScore;
+        const homeworkAnswer = this.questionAnswers.didNotCollect ? 'no' : 'yes';
+        const questionnaireAnswer = this.questionAnswers.didNotAdminister ? 'no' : 'yes';
         
-        return `Number of days practiced: ${daysText}
-ECBI/WACB score: ${scoreText}
+        return `Questionnaire: ${questionnaireAnswer}
+Asked about homework: ${homeworkAnswer}
 Did coding analysis: yes`;
     }
 }
