@@ -6,7 +6,7 @@ function getTimerDuration() {
                        window.location.hostname === '127.0.0.1';
     
     return isLocalhost 
-        ? 10      // 10 seconds for localhost testing
+        ? 30      // 30 seconds for localhost testing
         : 60 * 5; // 5 minutes for production
 }
 
