@@ -13,9 +13,10 @@ Did coding analysis: yes
 
 ## Web App
 - [X] Fix the header for the email to be [PCIT Intermediary]
-- [ ] Better feedback
+- [X] Better feedback
   - [X] Haptic for chrome
-  - [ ] Color on click?
+  - [X] Color on click
+- [X] Better button colors by default
 - [ ] UI needs to be better
 - [ ] Version number in the settings
 - [ ] Better labels on her buttons

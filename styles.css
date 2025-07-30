@@ -33,10 +33,8 @@ body {
 }
 
 .count-button {
-    border: none;
+    border: 2px solid;
     border-radius: 12px;
-    background: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -47,22 +45,82 @@ body {
     font-weight: 600;
 }
 
-.count-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+/* Green buttons - TA, BD, RF */
+.count-button[data-id="1"],
+.count-button[data-id="2"], 
+.count-button[data-id="3"] {
+    background: rgb(240, 253, 244);
+    border-color: rgb(187, 247, 208);
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.1);
 }
 
-.count-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.count-button[data-id="1"]:hover,
+.count-button[data-id="2"]:hover,
+.count-button[data-id="3"]:hover {
+    background: rgb(134, 239, 172);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
 }
+
+.count-button[data-id="1"]:active,
+.count-button[data-id="2"]:active,
+.count-button[data-id="3"]:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(34, 197, 94, 0.3);
+}
+
+/* Purple buttons - LP, UP */
+.count-button[data-id="4"],
+.count-button[data-id="6"] {
+    background: rgb(250, 245, 255);
+    border-color: rgb(196, 181, 253);
+    box-shadow: 0 2px 8px rgba(147, 51, 234, 0.1);
+}
+
+.count-button[data-id="4"]:hover,
+.count-button[data-id="6"]:hover {
+    background: rgb(196, 181, 253);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.2);
+}
+
+.count-button[data-id="4"]:active,
+.count-button[data-id="6"]:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(147, 51, 234, 0.3);
+}
+
+/* Orange buttons - QU, CM, NTA */
+.count-button[data-id="7"],
+.count-button[data-id="8"],
+.count-button[data-id="9"] {
+    background: rgb(255, 247, 237);
+    border-color: rgb(254, 215, 170);
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.1);
+}
+
+.count-button[data-id="7"]:hover,
+.count-button[data-id="8"]:hover,
+.count-button[data-id="9"]:hover {
+    background: rgb(254, 215, 170);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+}
+
+.count-button[data-id="7"]:active,
+.count-button[data-id="8"]:active,
+.count-button[data-id="9"]:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.3);
+}
+
 
 .undo-button {
-    border: none;
+    border: 2px solid rgb(59, 130, 246);
     border-radius: 12px;
-    background: #f59e0b;
+    background: rgb(96, 165, 250);
     color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -73,18 +131,21 @@ body {
 }
 
 .undo-button:hover {
-    background: #d97706;
+    background: rgb(59, 130, 246);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .undo-button:active {
     transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.4);
 }
 
 .undo-button.disabled {
     background: #9ca3af;
+    border-color: #6b7280;
     cursor: not-allowed;
+    opacity: 0.5;
 }
 
 .undo-icon {
