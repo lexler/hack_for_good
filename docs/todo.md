@@ -12,8 +12,7 @@ Did coding analysis: yes
 ```
 
 ## Web App
-- [ ] Fix the header for the email to be [PCIT Intermediary]
-- [ ] Export to spreadsheet
+- [X] Fix the header for the email to be [PCIT Intermediary]
 - [ ] Better feedback
   - [X] Haptic for chrome
   - [ ] Color on click?
