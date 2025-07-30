@@ -67,6 +67,23 @@ Modern and simple styling, mobile-first responsive design optimized for phone us
   - Finish evaluation (view final results summary)
   - No data saved between sessions
 
+- **Data Export**
+  - Copy session data to clipboard automatically when finishing evaluation
+  - Format: Behavioral counts as numbers, one per line with empty line after first count
+  - **Input Example**: TA=3, BD=2, RF=1, LP=4, UP=6, QU=0, CM=1, NTA=0
+  - **Output Example**: 
+    ```
+    3
+
+    2
+    1
+    4
+    6
+    0
+    1
+    0
+    ```
+
 - **Interface & Design**
   - Full-screen layout optimized for phones
   - Clean design with abbreviations and full descriptions
