@@ -2,10 +2,19 @@
 
 ## Local Development
 
-Run the app locally on port 80:
+Run the app locally on port 8080:
 ```bash
 ./run.sh
 ```
+
+## Shell Scripts
+
+| Script | Purpose                                                                                             |
+|--------|-----------------------------------------------------------------------------------------------------|
+| `run.sh` | Starts local development server on port 8080 using http-server (installs if needed)                 |
+| `capture_screenshot.sh` | Captures a screenshot of the running app at iPhone 12 dimensions (390x844)                          |
+| `update_version.sh` | Increments patch version in script.js and index.html files. This is run automatically as a git hook |
+
 
 ## GitHub Pages Deployment
 
