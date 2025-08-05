@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly LOCALHOST_URL="http://localhost"
+readonly LOCALHOST_URL="http://localhost:8080"
 readonly SCREENSHOT_PATH="img/current_screenshot.png"
 readonly IPHONE_WIDTH=390
 readonly IPHONE_HEIGHT=844
