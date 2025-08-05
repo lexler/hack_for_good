@@ -9,19 +9,40 @@
 
 You can use your keyboard instead of tapping:
 
-**Number Pad Layout:**
-```
-7 = TA    8 = BD    9 = RF
-4 = LP    5 = UNDO  6 = UP  
-1 = QU    2 = CM    3 = NTA
-```
-
-**QWERTY Layout (Alternative):**
-```
-Q = TA    W = BD    E = RF
-A = LP    S = UNDO  D = UP
-Z = QU    X = CM    C = NTA
-```
+<table>
+<thead>
+<tr>
+<th align="center">Number Pad</th>
+<th align="center">App</th>
+<th align="center">QWERTY</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">
+<table>
+<tr><td>7</td><td>8</td><td>9</td></tr>
+<tr><td>4</td><td>5</td><td>6</td></tr>
+<tr><td>1</td><td>2</td><td>3</td></tr>
+</table>
+</td>
+<td align="center">
+<table>
+<tr><td>TA</td><td>BD</td><td>RF</td></tr>
+<tr><td>LP</td><td>↩️</td><td>UP</td></tr>
+<tr><td>QU</td><td>CM</td><td>NTA</td></tr>
+</table>
+</td>
+<td align="center">
+<table>
+<tr><td>Q</td><td>W</td><td>E</td></tr>
+<tr><td>A</td><td>S</td><td>D</td></tr>
+<tr><td>Z</td><td>X</td><td>C</td></tr>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
 
 ## User Guide
 
