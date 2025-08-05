@@ -1,40 +1,28 @@
-# Counter App
-
-A simple counting app with 8 categories for behavioral tracking.
+# CDI Coding Counter
 
 | App Preview | Quick Access |
 |-------------|--------------|
 | ![App Screenshot](img/current_screenshot.png) | <img src="img/qr-code.svg" width="390" alt="QR Code"> |
-| Live preview of the counter app | Scan to open: [lexler.github.io/hack_for_good](https://lexler.github.io/hack_for_good/) |
+| | Scan to open: [lexler.github.io/hack_for_good](https://lexler.github.io/hack_for_good/) |
 
-## Features
+## Keyboard Shortcuts
 
-- 8 counting buttons (LP, RF, BD, TA, UP, NTA, QU, CA)
-- Configuration panel with undo, cancel, and finish options
-- Mobile-first responsive design
-- Results display with category counts
+You can use your keyboard instead of tapping:
 
-## Local Development
-
-Run the app locally on port 80:
-```bash
-./run.sh
+**Number Pad Layout:**
+```
+7 = TA    8 = BD    9 = RF
+4 = LP    5 = UNDO  6 = UP  
+1 = QU    2 = CM    3 = NTA
 ```
 
-## GitHub Pages
-
-Once you push this repository to GitHub, enable GitHub Pages in the repository settings and the app will be available at:
+**QWERTY Layout (Alternative):**
 ```
-https://lexler.github.io/hack_for_good/
+Q = TA    W = BD    E = RF
+A = LP    S = UNDO  D = UP
+Z = QU    X = CM    C = NTA
 ```
 
-## Usage
+---
 
-1. Tap any of the 8 counting buttons to increment that category
-2. Tap the config button (⚙️) to access additional options:
-   - **Return**: Go back to counting
-   - **Undo Last Action**: Decrements the most recently incremented counter
-   - **Cancel Evaluation**: Resets all counts to zero
-   - **Finish Evaluation**: Shows results summary, then returns to counting
-
-The app runs entirely in the browser with no backend required.
+*Developer? See [contribute.md](contribute.md) for technical details and development setup.*
