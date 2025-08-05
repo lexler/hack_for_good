@@ -23,6 +23,10 @@ A = LP    S = UNDO  D = UP
 Z = QU    X = CM    C = NTA
 ```
 
+## User Guide
+
+Read the whole [user guide here](./docs/user-guide.md) 
+
 ---
 
 *Developer? See [contribute.md](contribute.md) for technical details and development setup.*
