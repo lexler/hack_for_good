@@ -45,7 +45,12 @@ trap cleanup EXIT INT TERM
 echo -e "${YELLOW}🏃 Running tests...${NC}"
 echo "=========================="
 
-node test_automation.js
+# Check if specific test requested
+if [ "$1" != "" ]; then
+    node tests/run_all_tests.js --test=$1
+else
+    node tests/run_all_tests.js
+fi
 
 TEST_EXIT_CODE=$?
 
