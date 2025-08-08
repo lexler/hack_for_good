@@ -42,4 +42,9 @@ Asked about homework: no
 Did coding analysis: yes
 
 # Bugs
-- [X] Double click resizes screen, it should not 
+- [X] Double click resizes screen, it should not
+
+# TODO
+- [ ] Remove comments from tests
+- [ ] Remove v1 files and replace all files that used to be v1 with v2
+- [ ] Test coverage
