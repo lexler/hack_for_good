@@ -2,7 +2,6 @@
 
 // Configuration
 function getTimerDuration() {
-    // Check for test mode first
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('testMode') === 'true') {
         return 30; // 30 seconds for automated tests
