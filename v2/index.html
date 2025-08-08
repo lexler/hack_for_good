@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <div class="button-grid">
+            <button class="count-button" data-id="1">
+                <div class="label">TA</div>
+                <div class="description">Neutral Talk</div>
+                <div class="count">0</div>
+            </button>
+            <button class="count-button" data-id="2">
+                <div class="label">BD</div>
+                <div class="description">Behavior Description</div>
+                <div class="count">0</div>
+            </button>
+            <button class="count-button" data-id="3">
+                <div class="label">RF</div>
+                <div class="description">Reflection</div>
+                <div class="count">0</div>
+            </button>
+            <button class="count-button" data-id="4">
+                <div class="label">LP</div>
+                <div class="description">Labeled Praise</div>
+                <div class="count">0</div>
+            </button>
+            <button class="undo-button" id="undo-direct-btn">
+                <svg class="undo-icon" id="undo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 7v6h6"/>
+                    <path d="m21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"/>
+                </svg>
+                <svg class="play-icon" id="play-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                    <polygon points="5,3 19,12 5,21"/>
+                </svg>
+                <div class="undo-text" id="button-text">Start</div>
+                <div class="timer-display" id="timer-display">1:00</div>
+            </button>
+            <button class="count-button" data-id="6">
+                <div class="label">UP</div>
+                <div class="description">Unlabeled Praise</div>
+                <div class="count">0</div>
+            </button>
+            <button class="count-button" data-id="7">
+                <div class="label">QU</div>
+                <div class="description">Question</div>
+                <div class="count">0</div>
+            </button>
+            <button class="count-button" data-id="8">
+                <div class="label">CM</div>
+                <div class="description">Command</div>
+                <div class="count">0</div>
+            </button>
+            <button class="count-button" data-id="9">
+                <div class="label">NTA</div>
+                <div class="description">Negative Talk</div>
+                <div class="count">0</div>
+            </button>
+        </div>
+        <button class="settings-button" id="config-btn">⚙️ Settings</button>
+    </div>
+
+    <div class="modal" id="config-modal">
+        <div class="modal-content">
+            <button class="modal-button" id="return-btn">Return</button>
+            <button class="modal-button" id="cancel-btn">Cancel Evaluation</button>
+            <button class="modal-button" id="finish-btn">Finish Evaluation</button>
+            <button class="modal-button" id="skip-coding-btn">Skip Coding</button>
+            <div class="version-info" id="version-info">Version 0.0.56</div>
+        </div>
+    </div>
+
+    <div class="modal" id="combined-modal">
+        <div class="modal-content combined-content">
+            <h2>Session Results</h2>
+            <div class="modal-sections">
+                <div class="summary-section">
+                    <h3>Summary</h3>
+                    <div id="summary-list"></div>
+                </div>
+                <div class="question-section">
+                    <h3>Questions</h3>
+                    <div class="question-item">
+                        <label>1. Number of days practiced last week</label>
+                        <input type="number" id="days-practiced" min="0" max="7" placeholder="0-7">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="did-not-collect">
+                            <label for="did-not-collect">Did not collect</label>
+                        </div>
+                    </div>
+                    <div class="question-item">
+                        <label>2. ECBI/WACB score:</label>
+                        <input type="number" id="ecbi-score" min="0" placeholder="Score">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="did-not-administer">
+                            <label for="did-not-administer">Did not administer</label>
+                        </div>
+                    </div>
+                    <div id="validation-error" class="error-message" style="display: none;"></div>
+                </div>
+            </div>
+            <button class="modal-button primary" id="copy-email-btn">Copy & Email Results</button>
+            <button class="modal-button" id="combined-return-btn">Exit</button>
+        </div>
+    </div>
+
+    <div class="modal" id="teaching-session-modal">
+        <div class="modal-content">
+            <h2>Did you do a teaching session?</h2>
+            <div class="question-buttons">
+                <button class="modal-button" id="teaching-yes-btn">Yes</button>
+                <button class="modal-button" id="teaching-no-btn">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="script.js"></script>
+</body>
+</html>
