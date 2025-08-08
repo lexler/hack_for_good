@@ -4,14 +4,27 @@ const puppeteer = require('puppeteer');
 // Import all test files
 const test1HappyPath = require('./test1_happy_path');
 const test2SkipCodingTeaching = require('./test2_skip_coding_teaching');
-const test3ManualFinish = require('./test3_manual_finish');
+const test3SkipCodingAlternative = require('./test3_skip_coding_alternative');
+const test4ManualFinish = require('./test4_manual_finish');
+const test5CancelEvaluation = require('./test5_cancel_evaluation');
+const test6UndoFunctionality = require('./test6_undo_functionality');
+const test7KeyboardShortcuts = require('./test7_keyboard_shortcuts');
+const test8ValidationDidNotCollect = require('./test8_validation_did_not_collect');
+const test9ValidationDidNotAdminister = require('./test9_validation_did_not_administer');
+const test10ReturnNavigation = require('./test10_return_navigation');
 
 // Test registry - add new tests here
 const tests = [
-    { name: 'Happy Path', fn: test1HappyPath },
-    { name: 'Skip Coding - Teaching', fn: test2SkipCodingTeaching },
-    { name: 'Manual Finish', fn: test3ManualFinish },
-    // Add more tests here as they're created
+    { name: 'Test 1: Happy Path', fn: test1HappyPath },
+    { name: 'Test 2: Skip Coding - Teaching', fn: test2SkipCodingTeaching },
+    { name: 'Test 3: Skip Coding - Alternative', fn: test3SkipCodingAlternative },
+    { name: 'Test 4: Manual Finish', fn: test4ManualFinish },
+    { name: 'Test 5: Cancel Evaluation', fn: test5CancelEvaluation },
+    { name: 'Test 6: Undo Functionality', fn: test6UndoFunctionality },
+    { name: 'Test 7: Keyboard Shortcuts', fn: test7KeyboardShortcuts },
+    { name: 'Test 8: Validation - Did Not Collect', fn: test8ValidationDidNotCollect },
+    { name: 'Test 9: Validation - Did Not Administer', fn: test9ValidationDidNotAdminister },
+    { name: 'Test 10: Return Navigation', fn: test10ReturnNavigation },
 ];
 
 // Main test runner

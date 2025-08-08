@@ -1,4 +1,4 @@
-// Test 3: Manual Finish Evaluation
+// Test 4: Manual Finish Evaluation
 const { 
     setupPage,
     startSession,
@@ -7,8 +7,8 @@ const {
     delay 
 } = require('./common');
 
-async function test3ManualFinish(browser) {
-    console.log('\n📋 Test 3: Manual Finish Evaluation');
+async function test4ManualFinish(browser) {
+    console.log('\n📋 Test 4: Manual Finish Evaluation');
     const page = await setupPage(browser);
     
     try {
@@ -40,15 +40,15 @@ async function test3ManualFinish(browser) {
         }
         
         console.log('  ✓ Manual finish with correct counts');
-        console.log('  ✅ Test 3 PASSED');
+        console.log('  ✅ Test 4 PASSED');
         return true;
         
     } catch (error) {
-        console.error('  ❌ Test 3 FAILED:', error.message);
+        console.error('  ❌ Test 4 FAILED:', error.message);
         throw error;
     } finally {
         await page.close();
     }
 }
 
-module.exports = test3ManualFinish;
+module.exports = test4ManualFinish;
