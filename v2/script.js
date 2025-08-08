@@ -2,6 +2,12 @@
 
 // Configuration
 function getTimerDuration() {
+    // Check for test mode first
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('testMode') === 'true') {
+        return 30; // 30 seconds for automated tests
+    }
+    
     const isLocalhost = window.location.hostname === 'localhost' || 
                        window.location.hostname === '127.0.0.1';
     
@@ -341,6 +347,12 @@ class CounterApp {
         
         // Add skip coding flag
         params.append('skip', skipCoding);
+        
+        // Pass through testMode if present
+        const currentParams = new URLSearchParams(window.location.search);
+        if (currentParams.get('testMode') === 'true') {
+            params.append('testMode', 'true');
+        }
         
         // Redirect to finish evaluation page
         window.location.href = `finish_evaluation.html?${params.toString()}`;

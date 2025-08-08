@@ -20,6 +20,9 @@ class FinishEvaluationApp {
             9: 'NTA (criticism)'
         };
         
+        // Check if we're in test mode
+        this.isTestMode = new URLSearchParams(window.location.search).get('testMode') === 'true';
+        
         this.init();
     }
     
@@ -188,12 +191,26 @@ class FinishEvaluationApp {
         
         // Generate email content
         const emailContent = this.generateEmailContent();
-        const subject = encodeURIComponent('[PCIT Intermediary]');
-        const body = encodeURIComponent(emailContent);
+        const subject = '[PCIT Intermediary]';
+        const recipient = 'RACHEL.4.WILSON@cuanschutz.edu';
         
-        setTimeout(() => {
-            window.location.href = `mailto:RACHEL.4.WILSON@cuanschutz.edu?subject=${subject}&body=${body}`;
-        }, 500);
+        if (this.isTestMode) {
+            // In test mode, expose email data for testing
+            window.testEmailData = {
+                recipient: recipient,
+                subject: subject,
+                body: emailContent,
+                clipboard: clipboardData
+            };
+            console.log('Test mode: Email data captured', window.testEmailData);
+        } else {
+            // Normal mode: send email
+            const encodedSubject = encodeURIComponent(subject);
+            const encodedBody = encodeURIComponent(emailContent);
+            setTimeout(() => {
+                window.location.href = `mailto:${recipient}?subject=${encodedSubject}&body=${encodedBody}`;
+            }, 500);
+        }
     }
     
     generateClipboardData() {
