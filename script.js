@@ -101,12 +101,10 @@ class CounterApp {
     incrementCount(id) {
         if (this.timer.isExpired) return; // Don't allow counting when timer expired
         
-        // Start timer on first button press (only if already started)
         if (!this.timer.isActive && this.isStarted) {
             this.startTimer();
         }
         
-        // Don't allow counting until started
         if (!this.isStarted) return;
         
         this.counts[id]++;
