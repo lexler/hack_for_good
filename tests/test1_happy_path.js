@@ -15,7 +15,6 @@ async function test1HappyPath(browser) {
     try {
         console.log('  ✓ Opened counter app');
         
-        // Start session
         await startSession(page);
         console.log('  ✓ Started session');
         
