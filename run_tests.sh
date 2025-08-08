@@ -17,7 +17,7 @@ fi
 
 # Start the server in background
 echo -e "${YELLOW}🚀 Starting test server on port 8080...${NC}"
-python3 -m http.server 8080 --directory .. > /dev/null 2>&1 &
+python3 -m http.server 8080 > /dev/null 2>&1 &
 SERVER_PID=$!
 
 # Give server time to start

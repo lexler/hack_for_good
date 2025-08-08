@@ -74,51 +74,6 @@
         </div>
     </div>
 
-    <div class="modal" id="combined-modal">
-        <div class="modal-content combined-content">
-            <h2>Session Results</h2>
-            <div class="modal-sections">
-                <div class="summary-section">
-                    <h3>Summary</h3>
-                    <div id="summary-list"></div>
-                </div>
-                <div class="question-section">
-                    <h3>Questions</h3>
-                    <div class="question-item">
-                        <label>1. Number of days practiced last week</label>
-                        <input type="number" id="days-practiced" min="0" max="7" placeholder="0-7">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="did-not-collect">
-                            <label for="did-not-collect">Did not collect</label>
-                        </div>
-                    </div>
-                    <div class="question-item">
-                        <label>2. ECBI/WACB score:</label>
-                        <input type="number" id="ecbi-score" min="0" placeholder="Score">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="did-not-administer">
-                            <label for="did-not-administer">Did not administer</label>
-                        </div>
-                    </div>
-                    <div id="validation-error" class="error-message" style="display: none;"></div>
-                </div>
-            </div>
-            <button class="modal-button primary" id="copy-email-btn">Copy & Email Results</button>
-            <button class="modal-button" id="combined-return-btn">Exit</button>
-        </div>
-    </div>
-
-    <div class="modal" id="teaching-session-modal">
-        <div class="modal-content">
-            <h2>Did you do a teaching session?</h2>
-            <div class="question-buttons">
-                <button class="modal-button" id="teaching-yes-btn">Yes</button>
-                <button class="modal-button" id="teaching-no-btn">No</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="toast" class="toast"></div>
     <script src="script.js"></script>
 </body>
 </html>

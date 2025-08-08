@@ -1,6 +1,6 @@
 // Common test utilities and configuration
 
-const BASE_URL = 'http://localhost:8080/v2';
+const BASE_URL = 'http://localhost:8080';
 const DELAY = 10; // ms between button clicks - minimal delay
 
 // Delay utility

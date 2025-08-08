@@ -2,6 +2,12 @@
 
 // Configuration
 function getTimerDuration() {
+    // Check for test mode first
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('testMode') === 'true') {
+        return 30; // 30 seconds for automated tests
+    }
+    
     const isLocalhost = window.location.hostname === 'localhost' || 
                        window.location.hostname === '127.0.0.1';
     
@@ -88,32 +94,8 @@ class CounterApp {
             this.finishEvaluation();
         });
         
-        document.getElementById('combined-return-btn').addEventListener('click', () => {
-            this.hideCombinedModal();
-        });
-        
-        document.getElementById('copy-email-btn').addEventListener('click', () => {
-            this.processCombinedForm();
-        });
-        
-        document.getElementById('did-not-collect').addEventListener('change', (e) => {
-            this.toggleDaysInput(e.target.checked);
-        });
-        
-        document.getElementById('did-not-administer').addEventListener('change', (e) => {
-            this.toggleScoreInput(e.target.checked);
-        });
-        
         document.getElementById('skip-coding-btn').addEventListener('click', () => {
             this.startSkipCodingFlow();
-        });
-        
-        document.getElementById('teaching-yes-btn').addEventListener('click', () => {
-            this.handleTeachingSessionAnswer(true);
-        });
-        
-        document.getElementById('teaching-no-btn').addEventListener('click', () => {
-            this.handleTeachingSessionAnswer(false);
         });
     }
     
@@ -209,8 +191,7 @@ class CounterApp {
     }
     
     finishEvaluation() {
-        this.showCombinedModal();
-        this.hideConfigModal();
+        this.redirectToFinishPage(false);
     }
     
     
@@ -318,7 +299,7 @@ class CounterApp {
         this.timer.isActive = false;
         
         this.updateTimerDisplay();
-        this.finishEvaluation();
+        this.redirectToFinishPage(false);
     }
     
     updateTimerDisplay() {
@@ -352,137 +333,31 @@ class CounterApp {
         });
     }
     
-    emailResults() {
-        const emailContent = this.generateEmailContent();
-        const subject = encodeURIComponent("[PCIT Intermediary]");
-        const body = encodeURIComponent(emailContent);
-        const mailtoUrl = `mailto:RACHEL.4.WILSON@cuanschutz.edu?subject=${subject}&body=${body}`;
-        
-        window.location.href = mailtoUrl;
-    }
-    
-    
-    showCombinedModal() {
-        this.populateNormalSummary();
-        this.resetQuestionForm();
-        document.getElementById('combined-modal').classList.add('show');
-    }
-    
-    populateNormalSummary() {
-        const summaryList = document.getElementById('summary-list');
-        summaryList.innerHTML = '';
-        
-        Object.keys(this.counts).forEach(id => {
-            const resultItem = document.createElement('div');
-            resultItem.className = 'result-item';
-            resultItem.innerHTML = `
-                <span>${this.labels[id]}</span>
-                <span>${this.counts[id]}</span>
-            `;
-            summaryList.appendChild(resultItem);
-        });
-    }
-    
-    populateAlternativeSummary(sessionType) {
-        const summaryList = document.getElementById('summary-list');
-        summaryList.innerHTML = '';
-        
-        const resultItem = document.createElement('div');
-        resultItem.className = 'result-item alternative-session';
-        resultItem.innerHTML = `<span>${sessionType}</span>`;
-        summaryList.appendChild(resultItem);
-    }
-    
-    resetQuestionForm() {
-        document.getElementById('days-practiced').value = '';
-        document.getElementById('ecbi-score').value = '';
-        document.getElementById('did-not-collect').checked = false;
-        document.getElementById('did-not-administer').checked = false;
-        document.getElementById('days-practiced').disabled = false;
-        document.getElementById('ecbi-score').disabled = false;
-        document.getElementById('validation-error').style.display = 'none';
-    }
-    
-    hideCombinedModal() {
-        document.getElementById('combined-modal').classList.remove('show');
-    }
-    
     startSkipCodingFlow() {
-        this.isSkipCoding = true;
-        this.hideConfigModal();
-        document.getElementById('teaching-session-modal').classList.add('show');
+        this.redirectToFinishPage(true);
     }
     
-    handleTeachingSessionAnswer(isTeaching) {
-        this.isTeachingSession = isTeaching;
-        document.getElementById('teaching-session-modal').classList.remove('show');
-        this.showSkipCodingModal();
-    }
-    
-    showSkipCodingModal() {
-        const sessionType = this.isTeachingSession ? 'Teaching Session only' : 'Alternative Session';
-        this.populateAlternativeSummary(sessionType);
-        this.resetQuestionForm();
-        document.getElementById('combined-modal').classList.add('show');
-    }
-    
-    toggleDaysInput(isChecked) {
-        const input = document.getElementById('days-practiced');
-        input.disabled = isChecked;
-        if (isChecked) {
-            input.value = '';
-        }
-    }
-    
-    toggleScoreInput(isChecked) {
-        const input = document.getElementById('ecbi-score');
-        input.disabled = isChecked;
-        if (isChecked) {
-            input.value = '';
-        }
-    }
-    
-    validateForm() {
-        const daysInput = document.getElementById('days-practiced');
-        const scoreInput = document.getElementById('ecbi-score');
-        const didNotCollect = document.getElementById('did-not-collect').checked;
-        const didNotAdminister = document.getElementById('did-not-administer').checked;
+    redirectToFinishPage(skipCoding) {
+        const params = new URLSearchParams();
         
-        const daysValid = didNotCollect || (daysInput.value !== '' && !isNaN(daysInput.value));
-        const scoreValid = didNotAdminister || (scoreInput.value !== '' && !isNaN(scoreInput.value));
+        // Add all counts
+        Object.keys(this.counts).forEach(id => {
+            params.append(`c${id}`, this.counts[id]);
+        });
         
-        if (!daysValid || !scoreValid) {
-            const errorDiv = document.getElementById('validation-error');
-            errorDiv.textContent = 'Please fill in each field or check the corresponding checkbox.';
-            errorDiv.style.display = 'block';
-            return false;
+        // Add skip coding flag
+        params.append('skip', skipCoding);
+        
+        // Pass through testMode if present
+        const currentParams = new URLSearchParams(window.location.search);
+        if (currentParams.get('testMode') === 'true') {
+            params.append('testMode', 'true');
         }
         
-        document.getElementById('validation-error').style.display = 'none';
-        return true;
+        // Redirect to finish evaluation page
+        window.location.href = `finish_evaluation.html?${params.toString()}`;
     }
     
-    processCombinedForm() {
-        if (!this.validateForm()) {
-            return;
-        }
-        
-        // Store the question answers
-        const daysInput = document.getElementById('days-practiced');
-        const scoreInput = document.getElementById('ecbi-score');
-        
-        this.questionAnswers.daysPracticed = document.getElementById('did-not-collect').checked ? null : parseInt(daysInput.value);
-        this.questionAnswers.didNotCollect = document.getElementById('did-not-collect').checked;
-        this.questionAnswers.ecbiScore = document.getElementById('did-not-administer').checked ? null : parseInt(scoreInput.value);
-        this.questionAnswers.didNotAdminister = document.getElementById('did-not-administer').checked;
-        
-        // Copy to clipboard and send email
-        this.copySessionDataToClipboard();
-        this.emailResults();
-        
-        // Hide modal
-        this.hideCombinedModal();
-    }
     
     generateSessionData() {
         const timestamp = new Date().toLocaleString();
@@ -586,21 +461,6 @@ class CounterApp {
         }
     }
     
-    generateEmailContent() {
-        if (this.isSkipCoding) {
-            const teachingAnswer = this.isTeachingSession ? 'yes' : 'no';
-            return `Questionnaire: no
-Asked about homework: no
-Did coding analysis: ${teachingAnswer}`;
-        }
-        
-        const homeworkAnswer = this.questionAnswers.didNotCollect ? 'no' : 'yes';
-        const questionnaireAnswer = this.questionAnswers.didNotAdminister ? 'no' : 'yes';
-        
-        return `Questionnaire: ${questionnaireAnswer}
-Asked about homework: ${homeworkAnswer}
-Did coding analysis: yes`;
-    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
