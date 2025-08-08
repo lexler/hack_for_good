@@ -8,7 +8,7 @@ if lsof -i :8080 > /dev/null 2>&1; then
     if [ ! -z "$PID" ]; then
         kill $PID 2>/dev/null || true
         sleep 1
-        
+
         if lsof -i :8080 > /dev/null 2>&1; then
             kill -9 $PID 2>/dev/null || true
         fi
