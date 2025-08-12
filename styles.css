@@ -15,12 +15,13 @@ body {
 
 .app {
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh; /* fallback */
     padding: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow: hidden;
 }
 
 .button-grid {

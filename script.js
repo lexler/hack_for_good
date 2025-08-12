@@ -1,4 +1,4 @@
-// Version 0.0.60
+// Version 0.0.61
 
 // Configuration
 function getTimerDuration() {
@@ -19,7 +19,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.60';
+        this.version = '0.0.61';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -62,6 +62,24 @@ class CounterApp {
         this.updateTimerDisplay();
         this.updateButtonState();
         this.preventPullToRefresh();
+        this.setViewportHeight();
+    }
+    
+    setViewportHeight() {
+        // Set the app container to the actual viewport height
+        const setHeight = () => {
+            const app = document.querySelector('.app');
+            if (app) {
+                app.style.height = `${window.innerHeight}px`;
+            }
+        };
+        
+        // Set on load
+        setHeight();
+        
+        // Update on resize or orientation change
+        window.addEventListener('resize', setHeight);
+        window.addEventListener('orientationchange', setHeight);
     }
     
     preventPullToRefresh() {

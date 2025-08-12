@@ -22,4 +22,4 @@ if ! command -v http-server &> /dev/null; then
 fi
 
 echo "Starting http-server on port 8080..."
-http-server -p 8080 -o
+http-server -p 8080
