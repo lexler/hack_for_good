@@ -48,6 +48,8 @@ You can use your keyboard instead of tapping:
 
 Read the whole [user guide here](./docs/user-guide.md) 
 
+Practice training video: [Watch on YouTube](https://www.youtube.com/watch?v=oThDINK4_9E)
+
 ---
 
 *Developer? See [contribute.md](contribute.md) for technical details and development setup.*
