@@ -1,4 +1,4 @@
-// Version 0.0.58
+// Version 0.0.59
 
 // Configuration
 function getTimerDuration() {
@@ -19,7 +19,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.58';
+        this.version = '0.0.59';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -61,6 +61,16 @@ class CounterApp {
         this.bindKeyboardEvents();
         this.updateTimerDisplay();
         this.updateButtonState();
+        this.preventPullToRefresh();
+    }
+    
+    preventPullToRefresh() {
+        // Prevent all default touch behaviors on the document
+        document.body.addEventListener('touchmove', (e) => {
+            // Prevent the default behavior for all touch moves
+            // This will stop pull-to-refresh but also scrolling
+            e.preventDefault();
+        }, { passive: false });
     }
     
     bindEvents() {

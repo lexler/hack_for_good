@@ -4,25 +4,25 @@
 
 | Issue | Description | Reproduced | Verified | Fixed |
 |-------|-------------|------------|----------|-------|
-| Pull-to-refresh | Dragging down triggers page reload | [X]        | ⬜ | ⬜ |
-| Swipe navigation | Horizontal swipes trigger back/forward | ⬜          | ⬜ | ⬜ |
-| Long press context menu | Holding triggers Safari menu | ⬜          | ⬜ | ⬜ |
-| 3D Touch/Force Touch | Pressure triggers preview | ⬜          | ⬜ | ⬜ |
-| Double-tap zoom | Delays single click by 300ms | ⬜          | ⬜ | ⬜ |
-| Pinch-to-zoom | Multi-finger gestures | ⬜          | ⬜ | ⬜ |
-| Text selection | Accidental text highlighting instead of clicking | ⬜          | ⬜ | ⬜ |
-| Scroll momentum | Finger movement triggers scroll instead of click | ⬜          | ⬜ | ⬜ |
+| Pull-to-refresh | Dragging down triggers page reload | ✅ | ⬜ | ✅ |
+| Swipe navigation | Horizontal swipes trigger back/forward | ⬜ | ⬜ | ⬜ |
+| Long press context menu | Holding triggers Safari menu | ⬜ | ⬜ | ⬜ |
+| 3D Touch/Force Touch | Pressure triggers preview | ⬜ | ⬜ | ⬜ |
+| Double-tap zoom | Delays single click by 300ms | ⬜ | ⬜ | ⬜ |
+| Pinch-to-zoom | Multi-finger gestures | ⬜ | ⬜ | ⬜ |
+| Text selection | Accidental text highlighting instead of clicking | ⬜ | ⬜ | ⬜ |
+| Scroll momentum | Finger movement triggers scroll instead of click | ⬜ | ⬜ | ⬜ |
 
 ## General Browser Behaviors
 
 | Issue | Description | Reproduced | Verified | Fixed |
 |-------|-------------|------------|----------|-------|
-| Drag-to-select | Mouse/finger drag selects text | ⬜          | ⬜ | ⬜ |
-| Right-click menu | Context menu appears | ⬜          | ⬜ | ⬜ |
-| Focus loss | Click registers but button loses focus immediately | ⬜          | ⬜ | ⬜ |
-| Touch cancel | Finger slides off button before release | ⬜          | ⬜ | ⬜ |
-| Ghost clicks | Delayed synthetic clicks after touch | ⬜          | ⬜ | ⬜ |
-| Accidental zoom | Transforms button position during click | ⬜          | ⬜ | ⬜ |
+| Drag-to-select | Mouse/finger drag selects text | ⬜ | ⬜ | ⬜ |
+| Right-click menu | Context menu appears | ⬜ | ⬜ | ⬜ |
+| Focus loss | Click registers but button loses focus immediately | ⬜ | ⬜ | ⬜ |
+| Touch cancel | Finger slides off button before release | ⬜ | ⬜ | ⬜ |
+| Ghost clicks | Delayed synthetic clicks after touch | ⬜ | ⬜ | ⬜ |
+| Accidental zoom | Transforms button position during click | ⬜ | ⬜ | ⬜ |
 
 ## Prevention Strategy
 
