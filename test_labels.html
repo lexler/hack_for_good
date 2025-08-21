@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Labels</title>
+</head>
+<body>
+    <h1>URL Parameter Test</h1>
+    <div id="output"></div>
+    
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const output = document.getElementById('output');
+        
+        output.innerHTML = `
+            <p><strong>Current URL:</strong> ${window.location.href}</p>
+            <p><strong>Search params:</strong> ${window.location.search}</p>
+            <h3>Parameters:</h3>
+            <ul>
+                <li>btn1: ${urlParams.get('btn1') || 'not set'}</li>
+                <li>btn2: ${urlParams.get('btn2') || 'not set'}</li>
+                <li>btn3: ${urlParams.get('btn3') || 'not set'}</li>
+                <li>btn4: ${urlParams.get('btn4') || 'not set'}</li>
+                <li>btn5: ${urlParams.get('btn5') || 'not set'}</li>
+                <li>btn6: ${urlParams.get('btn6') || 'not set'}</li>
+                <li>btn7: ${urlParams.get('btn7') || 'not set'}</li>
+                <li>btn8: ${urlParams.get('btn8') || 'not set'}</li>
+            </ul>
+        `;
+    </script>
+</body>
+</html>

@@ -110,3 +110,12 @@ Modern and simple styling, mobile-first responsive design optimized for phone us
   - Full-screen layout optimized for phones
   - Clean design with abbreviations and full descriptions
   - Settings panel for session management
+
+- **URL Parameter Customization**
+  - Customize button labels and codes via URL parameters
+  - Use format: `?btn1=CODE:Label&btn2=CODE:Label&...&btn8=CODE:Label`
+  - Parameters btn1-btn8 correspond to button positions 1-8 (excluding center config button)
+  - Each parameter uses format `CODE:Full Label Description`
+  - URL encoding required for spaces and special characters
+  - **Example**: `?btn1=LP:Labeled%20Praise&btn2=RF:Reflection&btn3=BD:Behavior%20Description&btn4=TA:Talk&btn5=UP:Unlabeled%20Praise&btn6=NTA:Criticism&btn7=QU:Question&btn8=CM:Command`
+  - Falls back to default labels if parameters not provided or malformed

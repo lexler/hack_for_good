@@ -42,16 +42,23 @@ class CounterApp {
             isExpired: false,
             intervalId: null
         };
-        this.labels = {
-            1: 'TA (talk)',
-            2: 'BD (behavior description)',
-            3: 'RF (reflection)',
-            4: 'LP (labeled praise)',
-            6: 'UP (unlabeled praise)',
-            7: 'QU (question)',
-            8: 'CM (command)',
-            9: 'NTA (criticism)'
+        this.defaultLabels = {
+            1: { code: 'TA', description: 'Neutral Talk' },
+            2: { code: 'BD', description: 'Behavior Description' },
+            3: { code: 'RF', description: 'Reflection' },
+            4: { code: 'LP', description: 'Labeled Praise' },
+            6: { code: 'UP', description: 'Unlabeled Praise' },
+            7: { code: 'QU', description: 'Question' },
+            8: { code: 'CM', description: 'Command' },
+            9: { code: 'NTA', description: 'Negative Talk' }
         };
+        
+        this.labels = this.parseCustomLabels() || this.defaultLabels;
+        
+        // Debug: Show if custom labels were loaded
+        if (this.labels !== this.defaultLabels) {
+            console.log('Custom labels loaded successfully!');
+        }
         
         this.init();
     }
@@ -61,6 +68,73 @@ class CounterApp {
         this.bindKeyboardEvents();
         this.updateTimerDisplay();
         this.updateButtonState();
+        this.updateButtonLabels();
+    }
+    
+    parseCustomLabels() {
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log('URL search params:', window.location.search);
+        const customLabels = {};
+        let hasCustomLabels = false;
+        
+        // Map btn1-btn8 to data-id values (1,2,3,4,6,7,8,9)
+        const buttonMapping = {
+            'btn1': 1, 'btn2': 2, 'btn3': 3, 'btn4': 4,
+            'btn5': 6, 'btn6': 7, 'btn7': 8, 'btn8': 9
+        };
+        
+        for (const [param, dataId] of Object.entries(buttonMapping)) {
+            const value = urlParams.get(param);
+            console.log(`Checking ${param} (dataId ${dataId}):`, value);
+            if (value && value.includes(':')) {
+                const [code, ...descriptionParts] = value.split(':');
+                const description = descriptionParts.join(':').trim();
+                
+                if (code && description) {
+                    customLabels[dataId] = {
+                        code: code.trim(),
+                        description: description
+                    };
+                    hasCustomLabels = true;
+                    console.log(`Added custom label for ${dataId}:`, customLabels[dataId]);
+                }
+            }
+        }
+        
+        // Fill in missing labels with defaults
+        if (hasCustomLabels) {
+            for (const dataId of [1, 2, 3, 4, 6, 7, 8, 9]) {
+                if (!customLabels[dataId]) {
+                    customLabels[dataId] = this.defaultLabels[dataId];
+                }
+            }
+            console.log('Final custom labels:', customLabels);
+            return customLabels;
+        }
+        
+        console.log('No custom labels found, using defaults');
+        return null;
+    }
+    
+    updateButtonLabels() {
+        const buttons = document.querySelectorAll('.count-button');
+        
+        buttons.forEach(button => {
+            const dataId = parseInt(button.dataset.id);
+            const labelData = this.labels[dataId];
+            
+            if (labelData) {
+                const labelElement = button.querySelector('.label');
+                const descriptionElement = button.querySelector('.description');
+                
+                if (labelElement) {
+                    labelElement.textContent = labelData.code;
+                }
+                if (descriptionElement) {
+                    descriptionElement.textContent = labelData.description;
+                }
+            }
+        });
     }
     
     bindEvents() {
@@ -345,8 +419,21 @@ class CounterApp {
         // Add skip coding flag
         params.append('skip', skipCoding);
         
-        // Pass through testMode if present
+        // Pass through custom button labels if they exist
         const currentParams = new URLSearchParams(window.location.search);
+        const buttonMapping = {
+            'btn1': 1, 'btn2': 2, 'btn3': 3, 'btn4': 4,
+            'btn5': 6, 'btn6': 7, 'btn7': 8, 'btn8': 9
+        };
+        
+        for (const [param, dataId] of Object.entries(buttonMapping)) {
+            const value = currentParams.get(param);
+            if (value) {
+                params.append(param, value);
+            }
+        }
+        
+        // Pass through testMode if present
         if (currentParams.get('testMode') === 'true') {
             params.append('testMode', 'true');
         }
