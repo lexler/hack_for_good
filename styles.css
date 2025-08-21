@@ -15,12 +15,13 @@ body {
 
 .app {
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh; /* fallback */
     padding: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow: hidden;
 }
 
 .button-grid {
@@ -44,6 +45,11 @@ body {
     font-size: 16px;
     font-weight: 600;
     touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 
 /* Green buttons - TA, BD, RF */
@@ -130,6 +136,11 @@ body {
     justify-content: center;
     gap: 2px;
     touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .undo-button.start-state {
@@ -203,6 +214,11 @@ body {
     height: 60px;
     width: 100%;
     touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .settings-button:hover {
@@ -410,6 +426,11 @@ body {
     cursor: pointer;
     transition: background 0.2s ease;
     touch-action: manipulation;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .modal-button:hover {
