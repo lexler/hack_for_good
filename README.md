@@ -50,6 +50,8 @@ Read the whole [user guide here](./docs/user-guide.md)
 
 Practice training video: [Watch on YouTube](https://www.youtube.com/watch?v=oThDINK4_9E)
 
+**Customization:** Button labels can be customized via URL parameters. See [URL Parameter Customization](./docs/project_description.md#url-parameter-customization) for details.
+
 ---
 
 *Developer? See [contribute.md](contribute.md) for technical details and development setup.*
