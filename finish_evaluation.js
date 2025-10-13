@@ -237,7 +237,7 @@ class FinishEvaluationApp {
         // Generate email content
         const emailContent = this.generateEmailContent();
         const subject = '[PCIT Intermediary]';
-        const recipient = 'RACHEL.4.WILSON@cuanschutz.edu';
+        const recipient = '';
         
         if (this.isTestMode) {
             // In test mode, expose email data for testing
