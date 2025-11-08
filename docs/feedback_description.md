@@ -31,6 +31,13 @@ The feedback flow begins when the user chooses Finish Evaluation or Skip Coding 
   │  │  │  │                 │    │  │  ☐ Did not      │    │    │  │  [CHECKBOX 2]
   │  │  │  │                 │    │  │     administer  │    │    │  │
   │  │  │  │                 │    │  │                 │    │    │  │
+  │  │  │  │                 │    │  │ 3. Coaching time│    │    │  │
+  │  │  │  │                 │    │  │    (minutes)    │    │    │  │
+  │  │  │  │                 │    │  │  ┌───────────┐  │    │    │  │
+  │  │  │  │                 │    │  │  │[INPUT BOX]│  │    │    │  │  [COACHING TIME INPUT]
+  │  │  │  │                 │    │  │  └───────────┘  │    │    │  │
+  │  │  │  │                 │    │  │  (default: 0)   │    │    │  │
+  │  │  │  │                 │    │  │                 │    │    │  │
   │  │  │  │                 │    │  │  [ERROR MSG]    │    │    │  │  [VALIDATION ERROR]
   │  │  │  └─────────────────┘    │  └─────────────────┘    │    │  │
   │  │  └─────────────────────────┴─────────────────────────┘    │  │
@@ -55,7 +62,8 @@ The feedback flow begins when the user chooses Finish Evaluation or Skip Coding 
 During the summary, the user optionally records:
 - Days practiced since last visit.
 - ECBI/WACB score (or similar numeric rating).
-- Two checkboxes for “Did not collect homework” and “Did not administer questionnaire.”
+- Coaching time in minutes (defaults to 0, user can modify to any number).
+- Two checkboxes for "Did not collect homework" and "Did not administer questionnaire."
 
 Clipboard data is always exported in the same order:
 
@@ -72,7 +80,7 @@ Days practiced
 Score
 ```
 
-When either checkbox is selected, the corresponding line is left blank so downstream tooling can distinguish “not collected/administered” from a numeric zero.
+When either checkbox is selected, the corresponding line is left blank so downstream tooling can distinguish "not collected/administered" from a numeric zero.
 
 ## Skip Coding Branch
 Skip Coding prompts the user: “Did you do a teaching session?” Selecting Yes produces a summary labeled “Teaching Session only.” Selecting No displays “Alternative Session.” This branch bypasses the original summary panel but still funnels into the same clipboard and email generation. The email includes a boolean flag indicating whether the session was a teaching-only experience (true) or an alternative session (false).
@@ -84,3 +92,14 @@ Skip Coding prompts the user: “Did you do a teaching session?” Selecting Yes
 - Body containing the counts and session metadata plus the teaching-session flag.
 
 In addition to launching the email client, the clipboard still receives the newline-delimited export shown above so QA teams can verify or resend results if the email client fails to open.
+
+### Sample Email:
+```
+subject: [PCIT Intermediary]
+
+body:
+Questionnaire: no
+Asked about homework: yes
+Did coding analysis: yes
+Coached (mins): 5
+```
