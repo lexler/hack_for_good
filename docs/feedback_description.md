@@ -3,6 +3,49 @@
 ## Overview
 The feedback flow begins when the user chooses Finish Evaluation or Skip Coding from the session controls overlay. An overlay collects any remaining context, summarizes the observation, and returns the user to counting mode once complete. All logic runs client-side; no backend services are involved.
 
+## UI
+  ┌─────────────────────────────────────────────────────────────────┐
+  │                       [MODAL OVERLAY]                           │
+  │                                                                 │
+  │  ┌───────────────────────────────────────────────────────────┐  │
+  │  │                    Session Results                        │  │  [TITLE]
+  │  │                                                           │  │
+  │  │  ┌─────────────────────────┬─────────────────────────┐    │  │
+  │  │  │  [SUMMARY SECTION]      │  [QUESTION SECTION]     │    │  │
+  │  │  │  ┌─────────────────┐    │  ┌─────────────────┐    │    │  │
+  │  │  │  │   Summary       │    │  │   Questions     │    │    │  │
+  │  │  │  ├─────────────────┤    │  ├─────────────────┤    │    │  │
+  │  │  │  │                 │    │  │ 1. Number of    │    │    │  │
+  │  │  │  │  #summary-list  │    │  │    days         │    │    │  │
+  │  │  │  │  (behavior      │    │  │  ┌───────────┐  │    │    │  │
+  │  │  │  │   counts        │    │  │  │[INPUT BOX]│  │    │    │  │  [DAYS INPUT]
+  │  │  │  │   displayed     │    │  │  └───────────┘  │    │    │  │
+  │  │  │  │   here)         │    │  │  ☐ Did not      │    │    │  │  [CHECKBOX 1]
+  │  │  │  │                 │    │  │     collect     │    │    │  │
+  │  │  │  │                 │    │  │                 │    │    │  │
+  │  │  │  │                 │    │  │ 2. ECBI/WACB    │    │    │  │
+  │  │  │  │                 │    │  │    score        │    │    │  │
+  │  │  │  │                 │    │  │  ┌───────────┐  │    │    │  │
+  │  │  │  │                 │    │  │  │[INPUT BOX]│  │    │    │  │  [ECBI INPUT]
+  │  │  │  │                 │    │  │  └───────────┘  │    │    │  │
+  │  │  │  │                 │    │  │  ☐ Did not      │    │    │  │  [CHECKBOX 2]
+  │  │  │  │                 │    │  │     administer  │    │    │  │
+  │  │  │  │                 │    │  │                 │    │    │  │
+  │  │  │  │                 │    │  │  [ERROR MSG]    │    │    │  │  [VALIDATION ERROR]
+  │  │  │  └─────────────────┘    │  └─────────────────┘    │    │  │
+  │  │  └─────────────────────────┴─────────────────────────┘    │  │
+  │  │                                                           │  │
+  │  │  ┌─────────────────────────────────────────────────────┐  │  │
+  │  │  │      [Copy & Email Results]                         │  │  │  [PRIMARY BUTTON]
+  │  │  └─────────────────────────────────────────────────────┘  │  │
+  │  │                                                           │  │
+  │  │  ┌─────────────────────────────────────────────────────┐  │  │
+  │  │  │              [Exit]                                 │  │  │  [SECONDARY BUTTON]
+  │  │  └─────────────────────────────────────────────────────┘  │  │
+  │  └───────────────────────────────────────────────────────────┘  │
+  └─────────────────────────────────────────────────────────────────┘
+
+
 ## Finish Evaluation Summary
 - Displays the eight behavioral counts with their labels.
 - Offers Return (keep observing) or Copy & Email Results.
