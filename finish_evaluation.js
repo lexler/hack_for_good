@@ -7,7 +7,8 @@ class FinishEvaluationApp {
             daysPracticed: null,
             didNotCollect: false,
             ecbiScore: null,
-            didNotAdminister: false
+            didNotAdminister: false,
+            coachingTime: 0
         };
         this.defaultLabels = {
             1: { code: 'TA', description: 'Neutral Talk' },
@@ -19,19 +20,18 @@ class FinishEvaluationApp {
             8: { code: 'CM', description: 'Command' },
             9: { code: 'NTA', description: 'Negative Talk' }
         };
-        
+
         this.labels = this.parseCustomLabels() || this.defaultLabels;
-        
-        // Check if we're in test mode
+
         this.isTestMode = new URLSearchParams(window.location.search).get('testMode') === 'true';
-        
+
         this.init();
     }
-    
+
     init() {
         this.parseUrlParams();
         this.bindEvents();
-        
+
         if (this.isSkipCoding) {
             document.getElementById('teaching-session-modal').classList.add('show');
             document.getElementById('combined-modal').classList.remove('show');
@@ -39,24 +39,23 @@ class FinishEvaluationApp {
             this.populateNormalSummary();
         }
     }
-    
+
     parseCustomLabels() {
         const urlParams = new URLSearchParams(window.location.search);
         const customLabels = {};
         let hasCustomLabels = false;
-        
-        // Map btn1-btn8 to data-id values (1,2,3,4,6,7,8,9)
+
         const buttonMapping = {
             'btn1': 1, 'btn2': 2, 'btn3': 3, 'btn4': 4,
             'btn5': 6, 'btn6': 7, 'btn7': 8, 'btn8': 9
         };
-        
+
         for (const [param, dataId] of Object.entries(buttonMapping)) {
             const value = urlParams.get(param);
             if (value && value.includes(':')) {
                 const [code, ...descriptionParts] = value.split(':');
                 const description = descriptionParts.join(':').trim();
-                
+
                 if (code && description) {
                     customLabels[dataId] = {
                         code: code.trim(),
@@ -66,8 +65,7 @@ class FinishEvaluationApp {
                 }
             }
         }
-        
-        // Fill in missing labels with defaults
+
         if (hasCustomLabels) {
             for (const dataId of [1, 2, 3, 4, 6, 7, 8, 9]) {
                 if (!customLabels[dataId]) {
@@ -76,72 +74,70 @@ class FinishEvaluationApp {
             }
             return customLabels;
         }
-        
+
         return null;
     }
-    
+
     parseUrlParams() {
         const params = new URLSearchParams(window.location.search);
-        
-        // Parse counts
+
         [1, 2, 3, 4, 6, 7, 8, 9].forEach(id => {
             const count = params.get(`c${id}`);
             if (count !== null) {
                 this.counts[id] = parseInt(count) || 0;
             }
         });
-        
-        // Parse skip coding flag
+
         this.isSkipCoding = params.get('skip') === 'true';
     }
-    
+
     bindEvents() {
         document.getElementById('combined-return-btn').addEventListener('click', () => {
             this.returnToCounter();
         });
-        
+
         document.getElementById('copy-email-btn').addEventListener('click', () => {
             this.processCombinedForm();
         });
-        
+
         document.getElementById('did-not-collect').addEventListener('change', (e) => {
             this.toggleDaysInput(e.target.checked);
         });
-        
+
         document.getElementById('did-not-administer').addEventListener('change', (e) => {
             this.toggleScoreInput(e.target.checked);
         });
-        
+
         document.getElementById('teaching-yes-btn').addEventListener('click', () => {
             this.handleTeachingSessionAnswer(true);
         });
-        
+
         document.getElementById('teaching-no-btn').addEventListener('click', () => {
             this.handleTeachingSessionAnswer(false);
         });
     }
-    
+
     handleTeachingSessionAnswer(isTeaching) {
         this.isTeachingSession = isTeaching;
         document.getElementById('teaching-session-modal').classList.remove('show');
         this.showSkipCodingModal();
     }
-    
+
     showSkipCodingModal() {
         const sessionType = this.isTeachingSession ? 'Teaching Session only' : 'Alternative Session';
         this.populateAlternativeSummary(sessionType);
         this.resetQuestionForm();
         document.getElementById('combined-modal').classList.add('show');
     }
-    
+
     populateNormalSummary() {
         const summaryList = document.getElementById('summary-list');
         summaryList.innerHTML = '';
-        
+
         Object.keys(this.counts).forEach(id => {
             const labelData = this.labels[id];
             const displayLabel = labelData ? `${labelData.code} (${labelData.description})` : `Button ${id}`;
-            
+
             const item = document.createElement('div');
             item.className = 'summary-item';
             item.innerHTML = `
@@ -151,7 +147,7 @@ class FinishEvaluationApp {
             summaryList.appendChild(item);
         });
     }
-    
+
     populateAlternativeSummary(sessionType) {
         const summaryList = document.getElementById('summary-list');
         summaryList.innerHTML = `
@@ -160,17 +156,18 @@ class FinishEvaluationApp {
             </div>
         `;
     }
-    
+
     resetQuestionForm() {
         document.getElementById('days-practiced').value = '';
         document.getElementById('did-not-collect').checked = false;
         document.getElementById('ecbi-score').value = '';
         document.getElementById('did-not-administer').checked = false;
+        document.getElementById('coaching-time').value = '0';
         document.getElementById('days-practiced').disabled = false;
         document.getElementById('ecbi-score').disabled = false;
         document.getElementById('validation-error').style.display = 'none';
     }
-    
+
     toggleDaysInput(isChecked) {
         const input = document.getElementById('days-practiced');
         input.disabled = isChecked;
@@ -180,7 +177,7 @@ class FinishEvaluationApp {
         }
         this.questionAnswers.didNotCollect = isChecked;
     }
-    
+
     toggleScoreInput(isChecked) {
         const input = document.getElementById('ecbi-score');
         input.disabled = isChecked;
@@ -190,15 +187,15 @@ class FinishEvaluationApp {
         }
         this.questionAnswers.didNotAdminister = isChecked;
     }
-    
+
     validateQuestions() {
         const daysInput = document.getElementById('days-practiced');
         const ecbiInput = document.getElementById('ecbi-score');
+        const coachingInput = document.getElementById('coaching-time');
         const didNotCollect = document.getElementById('did-not-collect').checked;
         const didNotAdminister = document.getElementById('did-not-administer').checked;
         const errorDiv = document.getElementById('validation-error');
-        
-        // Validate days practiced
+
         if (!didNotCollect) {
             const days = parseInt(daysInput.value);
             if (isNaN(days) || days < 0 || days > 7) {
@@ -208,8 +205,7 @@ class FinishEvaluationApp {
             }
             this.questionAnswers.daysPracticed = days;
         }
-        
-        // Validate ECBI score
+
         if (!didNotAdminister) {
             const score = parseInt(ecbiInput.value);
             if (isNaN(score) || score < 0) {
@@ -219,28 +215,33 @@ class FinishEvaluationApp {
             }
             this.questionAnswers.ecbiScore = score;
         }
-        
+
+        const coachingTime = parseInt(coachingInput.value);
+        if (isNaN(coachingTime) || coachingTime < 0) {
+            errorDiv.textContent = 'Please enter coaching time (0 or more minutes)';
+            errorDiv.style.display = 'block';
+            return false;
+        }
+        this.questionAnswers.coachingTime = coachingTime;
+
         errorDiv.style.display = 'none';
         return true;
     }
-    
+
     processCombinedForm() {
         if (!this.validateQuestions()) {
             return;
         }
-        
-        // Generate clipboard data (counts + questions)
+
         const clipboardData = this.generateClipboardData();
         this.copyToClipboard(clipboardData);
         this.showToast('Results copied! Opening email client...');
-        
-        // Generate email content
+
         const emailContent = this.generateEmailContent();
         const subject = '[PCIT Intermediary]';
         const recipient = '';
-        
+
         if (this.isTestMode) {
-            // In test mode, expose email data for testing
             window.testEmailData = {
                 recipient: recipient,
                 subject: subject,
@@ -249,7 +250,6 @@ class FinishEvaluationApp {
             };
             console.log('Test mode: Email data captured', window.testEmailData);
         } else {
-            // Normal mode: send email
             const encodedSubject = encodeURIComponent(subject);
             const encodedBody = encodeURIComponent(emailContent);
             setTimeout(() => {
@@ -257,16 +257,13 @@ class FinishEvaluationApp {
             }, 500);
         }
     }
-    
+
     generateClipboardData() {
-        // Output just the behavioral counts, one per line
         let data = '';
-        
+
         if (this.isSkipCoding) {
-            // For skip coding, return empty counts
             data = '0\n0\n0\n0\n0\n0\n0\n0';
         } else {
-            // Add all the behavioral counts in order
             const countKeys = Object.keys(this.counts).sort();
             countKeys.forEach((id, index) => {
                 data += this.counts[id];
@@ -275,19 +272,17 @@ class FinishEvaluationApp {
                 }
             });
         }
-        
-        // Add days practiced (number or blank line)
+
         data += '\n';
         if (this.questionAnswers.daysPracticed !== null && !this.questionAnswers.didNotCollect) {
             data += this.questionAnswers.daysPracticed;
         }
-        
-        // Add ECBI/WACB score (number or blank line)
+
         data += '\n';
         if (this.questionAnswers.ecbiScore !== null && !this.questionAnswers.didNotAdminister) {
             data += this.questionAnswers.ecbiScore;
         }
-        
+
         return data;
     }
 
@@ -296,7 +291,8 @@ class FinishEvaluationApp {
             const teachingAnswer = this.isTeachingSession ? 'yes' : 'no';
             return `Questionnaire: no
 Asked about homework: no
-Did coding analysis: ${teachingAnswer}`;
+Did coding analysis: ${teachingAnswer}
+Coached (mins): ${this.questionAnswers.coachingTime}`;
         }
 
         const homeworkAnswer = this.questionAnswers.didNotCollect ? 'no' : 'yes';
@@ -304,9 +300,10 @@ Did coding analysis: ${teachingAnswer}`;
 
         return `Questionnaire: ${questionnaireAnswer}
 Asked about homework: ${homeworkAnswer}
-Did coding analysis: yes`;
+Did coding analysis: yes
+Coached (mins): ${this.questionAnswers.coachingTime}`;
     }
-    
+
     copyToClipboard(text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).catch(err => {
@@ -317,7 +314,7 @@ Did coding analysis: yes`;
             this.fallbackCopy(text);
         }
     }
-    
+
     fallbackCopy(text) {
         const textarea = document.createElement('textarea');
         textarea.value = text;
@@ -325,54 +322,51 @@ Did coding analysis: yes`;
         textarea.style.left = '-9999px';
         document.body.appendChild(textarea);
         textarea.select();
-        
+
         try {
             document.execCommand('copy');
         } catch (err) {
             console.error('Fallback copy failed:', err);
         }
-        
+
         document.body.removeChild(textarea);
     }
-    
+
     showToast(message) {
         const toast = document.getElementById('toast');
         toast.textContent = message;
         toast.classList.add('show');
-        
+
         setTimeout(() => {
             toast.classList.remove('show');
         }, 3000);
     }
-    
+
     returnToCounter() {
-        // Pass through custom labels when returning to counter
         const currentParams = new URLSearchParams(window.location.search);
         const params = new URLSearchParams();
-        
+
         const buttonMapping = {
             'btn1': 1, 'btn2': 2, 'btn3': 3, 'btn4': 4,
             'btn5': 6, 'btn6': 7, 'btn7': 8, 'btn8': 9
         };
-        
+
         for (const [param, dataId] of Object.entries(buttonMapping)) {
             const value = currentParams.get(param);
             if (value) {
                 params.append(param, value);
             }
         }
-        
-        // Pass through testMode if present
+
         if (currentParams.get('testMode') === 'true') {
             params.append('testMode', 'true');
         }
-        
+
         const queryString = params.toString();
         window.location.href = queryString ? `index.html?${queryString}` : 'index.html';
     }
 }
 
-// Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     new FinishEvaluationApp();
 });
