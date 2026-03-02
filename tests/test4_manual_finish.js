@@ -22,8 +22,8 @@ async function test4ManualFinish(browser) {
         console.log('  ✓ Manually finished evaluation');
 
         const url = page.url();
-        if (!url.includes('finish_evaluation.html')) {
-            throw new Error(`Expected finish_evaluation.html, got: ${url}`);
+        if (!url.includes('finish_evaluation_denver.html')) {
+            throw new Error(`Expected finish_evaluation_denver.html, got: ${url}`);
         }
 
         if (!url.includes('c1=2&c2=1')) {

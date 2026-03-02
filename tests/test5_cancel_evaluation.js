@@ -31,7 +31,7 @@ async function test5CancelEvaluation(browser) {
         
         // Verify we're still on counter page
         const url = page.url();
-        if (url.includes('finish_evaluation.html')) {
+        if (url.includes('finish_evaluation_denver.html')) {
             throw new Error('Should not navigate to finish page after cancel');
         }
         console.log('  ✓ Remained on counter page');

@@ -24,7 +24,7 @@ async function test10ReturnNavigation(browser) {
         
         // Verify we're on finish page
         let url = page.url();
-        if (!url.includes('finish_evaluation.html')) {
+        if (!url.includes('finish_evaluation_denver.html')) {
             throw new Error('Should be on finish page');
         }
         

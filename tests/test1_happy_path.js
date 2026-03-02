@@ -33,8 +33,8 @@ async function test1HappyPath(browser) {
         await finishEvaluation(page);
 
         const url = page.url();
-        if (!url.includes('finish_evaluation.html')) {
-            throw new Error(`Expected finish_evaluation.html, got: ${url}`);
+        if (!url.includes('finish_evaluation_denver.html')) {
+            throw new Error(`Expected finish_evaluation_denver.html, got: ${url}`);
         }
         console.log('  ✓ Redirected to finish page');
 

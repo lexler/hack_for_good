@@ -1,4 +1,4 @@
-// Version 0.0.68
+// Version 0.0.69
 
 // Configuration
 function getTimerDuration() {
@@ -19,7 +19,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.68';
+        this.version = '0.0.69';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -467,7 +467,7 @@ class CounterApp {
         }
         
         // Redirect to finish evaluation page
-        window.location.href = `finish_evaluation.html?${params.toString()}`;
+        window.location.href = `finish_evaluation_denver.html?${params.toString()}`;
     }
     
     
