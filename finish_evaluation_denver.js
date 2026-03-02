@@ -362,6 +362,11 @@ Coached (mins): ${this.questionAnswers.coachingTime}`;
             params.append('testMode', 'true');
         }
 
+        const finishPage = currentParams.get('finishPage');
+        if (finishPage) {
+            params.append('finishPage', finishPage);
+        }
+
         const queryString = params.toString();
         window.location.href = queryString ? `index.html?${queryString}` : 'index.html';
     }

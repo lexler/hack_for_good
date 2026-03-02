@@ -30,7 +30,7 @@ async function clickButtonFast(page, selector, times = 1) {
 // Common test setup
 async function setupPage(browser, testMode = true) {
     const page = await browser.newPage();
-    const url = testMode ? `${BASE_URL}/index.html?testMode=true` : `${BASE_URL}/index.html`;
+    const url = testMode ? `${BASE_URL}/index.html?testMode=true&finishPage=finish_evaluation_denver.html` : `${BASE_URL}/index.html`;
     await page.goto(url);
     return page;
 }
