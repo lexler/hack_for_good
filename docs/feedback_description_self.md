@@ -1,4 +1,7 @@
-# Feedback Description
+# Feedback Description - Self Reporting
+
+## Who Is This For
+This is to create an email for the clinician. It is anticipated that the data will be mined later.
 
 ## Overview
 The feedback flow begins when the user chooses Finish Evaluation or Skip Coding from the session controls overlay. An overlay collects any remaining context, summarizes the observation, and returns the user to counting mode once complete. All logic runs client-side; no backend services are involved.
@@ -98,8 +101,19 @@ In addition to launching the email client, the clipboard still receives the newl
 subject: [PCIT Intermediary]
 
 body:
-Questionnaire: no
-Asked about homework: yes
-Did coding analysis: yes
+TA (Neutral Talk): 25
+BD (Behavior Description): 10
+RF (Reflection): 3
+LP (Labeled Praise): 1
+UP (Unlabeled Praise): 4
+QU (Question): 2
+CM (Command): 1
+NTA (Negative Talk): 0
+
+Number of days practiced last week: 5 / Not collected
+ECBI/WACB score: 34 / Not collected
 Coached (mins): 5
+
+Additional notes:
+
 ```
