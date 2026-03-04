@@ -1,25 +1,34 @@
-// Version 0.0.73
+// Version 0.0.74
 
 // Configuration
 function getTimerDuration() {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('testMode') === 'true') {
-        return 30; // 30 seconds for automated tests
+        return 30;
     }
-    
-    const isLocalhost = window.location.hostname === 'localhost' || 
+
+    const isLocalhost = window.location.hostname === 'localhost' ||
                        window.location.hostname === '127.0.0.1';
-    
-    return isLocalhost 
-        ? 10      // 10 seconds for localhost testing
-        : 60 * 5; // 5 minutes for production
+
+    return isLocalhost
+        ? 10
+        : 60 * 5;
+}
+
+function getCaptureWindowDuration() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('testMode') === 'true') {
+        return 3;
+    }
+    return 10;
 }
 
 const TIMER_DURATION_SECONDS = getTimerDuration();
+const CAPTURE_WINDOW_SECONDS = getCaptureWindowDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.73';
+        this.version = '0.0.74';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -41,6 +50,9 @@ class CounterApp {
             remaining: TIMER_DURATION_SECONDS,
             isActive: false,
             isExpired: false,
+            isCaptureWindow: false,
+            captureRemaining: 0,
+            captureIntervalId: null,
             intervalId: null
         };
         this.defaultLabels = {
@@ -202,9 +214,9 @@ class CounterApp {
     }
     
     incrementCount(id) {
-        if (this.timer.isExpired) return; // Don't allow counting when timer expired
-        
-        if (!this.timer.isActive && this.isStarted) {
+        if (this.timer.isExpired) return;
+
+        if (!this.timer.isActive && !this.timer.isCaptureWindow && this.isStarted) {
             this.startTimer();
         }
         
@@ -382,34 +394,109 @@ class CounterApp {
         if (this.timer.intervalId) {
             clearInterval(this.timer.intervalId);
         }
-        
+        if (this.timer.captureIntervalId) {
+            clearInterval(this.timer.captureIntervalId);
+        }
+
         this.timer.startTime = null;
         this.timer.remaining = this.timer.duration;
         this.timer.isActive = false;
         this.timer.isExpired = false;
+        this.timer.isCaptureWindow = false;
+        this.timer.captureRemaining = 0;
+        this.timer.captureIntervalId = null;
         this.timer.intervalId = null;
-        
+
+        document.body.classList.remove('capture-window');
         this.updateTimerDisplay();
         this.enableCountingButtons();
     }
     
     expireTimer() {
         clearInterval(this.timer.intervalId);
-        this.timer.isExpired = true;
         this.timer.isActive = false;
-        
+
+        this.playEndOfSessionAlert();
+        this.startCaptureWindow();
+    }
+
+    startCaptureWindow() {
+        this.timer.isCaptureWindow = true;
+        this.timer.captureRemaining = CAPTURE_WINDOW_SECONDS;
+        document.body.classList.add('capture-window');
+        this.updateTimerDisplay();
+
+        this.timer.captureIntervalId = setInterval(() => {
+            this.timer.captureRemaining--;
+            this.updateTimerDisplay();
+
+            if (this.timer.captureRemaining <= 0) {
+                this.endCaptureWindow();
+            }
+        }, 1000);
+    }
+
+    endCaptureWindow() {
+        clearInterval(this.timer.captureIntervalId);
+        this.timer.isCaptureWindow = false;
+        this.timer.isExpired = true;
+        document.body.classList.remove('capture-window');
         this.updateTimerDisplay();
         this.redirectToFinishPage(false);
     }
+
+    playEndOfSessionAlert() {
+        this.playChime();
+        this.playAlertVibration();
+    }
+
+    playChime() {
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const now = audioContext.currentTime;
+
+            const playNote = (frequency, startTime, duration) => {
+                const oscillator = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                oscillator.connect(gain);
+                gain.connect(audioContext.destination);
+                oscillator.type = 'sine';
+                oscillator.frequency.value = frequency;
+                gain.gain.setValueAtTime(0.3, startTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+                oscillator.start(startTime);
+                oscillator.stop(startTime + duration);
+            };
+
+            playNote(523.25, now, 0.3);
+            playNote(659.25, now + 0.15, 0.3);
+            playNote(783.99, now + 0.3, 0.5);
+        } catch (e) {
+            // Web Audio API not available — visual + vibration still work
+        }
+    }
+
+    playAlertVibration() {
+        if ('vibrate' in navigator) {
+            navigator.vibrate([200, 100, 200, 100, 200]);
+        }
+    }
     
     updateTimerDisplay() {
+        const timerElement = document.getElementById('timer-display');
+
+        if (this.timer.isCaptureWindow) {
+            timerElement.textContent = `:${this.timer.captureRemaining.toString().padStart(2, '0')}`;
+            timerElement.classList.add('capture-window');
+            timerElement.classList.remove('expired');
+            return;
+        }
+
         const minutes = Math.floor(this.timer.remaining / 60);
         const seconds = this.timer.remaining % 60;
-        const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        
-        const timerElement = document.getElementById('timer-display');
-        timerElement.textContent = timeString;
-        
+        timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        timerElement.classList.remove('capture-window');
+
         if (this.timer.isExpired) {
             timerElement.classList.add('expired');
         } else {

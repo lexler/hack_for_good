@@ -198,6 +198,20 @@ body {
     font-weight: 700;
 }
 
+.timer-display.capture-window {
+    color: #fbbf24;
+    font-weight: 700;
+}
+
+@keyframes session-end-pulse {
+    0%, 100% { background-color: #f5f5f5; }
+    50% { background-color: rgba(251, 191, 36, 0.25); }
+}
+
+body.capture-window {
+    animation: session-end-pulse 1s ease-in-out infinite;
+}
+
 .settings-button {
     border: none;
     border-radius: 12px;
