@@ -36,6 +36,18 @@ The physical numpad mirrors the on-screen grid for quick desktop entry:
 ## Settings & Session Controls
 Tapping the center button opens an overlay with Return, Undo Last Action, Cancel Evaluation, Finish Evaluation, and Skip Coding options. The first three controls keep the user in the counter experience; Finish Evaluation and Skip Coding transition into the feedback flow described in `feedback_description.md`, then return to counting mode afterward.
 
+## End of Session
+When the session ends, a multi-layered alert fires and there is an additional 10 seconds to allow final captures. Then it auto-advances to the feedback page.
+
+### End-of-Session Alert
+The alert uses three simultaneous, non-blocking signals so the clinician notices regardless of context:
+
+- Audio chime — a short distinctive tone via Web Audio API. Works when the phone is face-down or across the room
+- Screen color pulse — the background flashes between normal and a bright color to catch peripheral vision
+- Vibration — `navigator.vibrate()` as a bonus tactile signal on Android; silently ignored on iOS
+
+All three layers are non-blocking — the counter grid stays fully usable during the 10-second final capture window.
+
 ## Customization
 Button labels and codes can be customized via URL parameters (`?btn1=CODE:Label&...&btn8=CODE:Label`). Parameters map to the eight counter positions (excluding the center config button). Each parameter uses the `CODE:Full Label Description` format and must be URL encoded. Invalid or missing parameters fall back to defaults. Example:
 
