@@ -1,4 +1,4 @@
-// Version 0.0.71
+// Version 0.0.72
 
 // Configuration
 function getTimerDuration() {
@@ -19,7 +19,7 @@ const TIMER_DURATION_SECONDS = getTimerDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.71';
+        this.version = '0.0.72';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -32,7 +32,7 @@ class CounterApp {
             ecbiScore: null,
             didNotAdminister: false
         };
-        this.finishPage = new URLSearchParams(window.location.search).get('finishPage') || 'finish_evaluation_denver.html';
+        this.finishPage = new URLSearchParams(window.location.search).get('finishPage') || 'finish_evaluation_self.html';
         this.isSkipCoding = false;
         this.isTeachingSession = null;
         this.timer = {
