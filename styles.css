@@ -204,8 +204,8 @@ body {
 }
 
 @keyframes session-end-pulse {
-    0%, 100% { background-color: #f5f5f5; }
-    50% { background-color: rgba(251, 191, 36, 0.25); }
+    0%, 100% { background-color: #ffffff; }
+    50% { background-color: #000000; }
 }
 
 body.capture-window {
