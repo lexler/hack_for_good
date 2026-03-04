@@ -12,6 +12,11 @@ const test7KeyboardShortcuts = require('./test7_keyboard_shortcuts');
 const test8ValidationDidNotCollect = require('./test8_validation_did_not_collect');
 const test9ValidationDidNotAdminister = require('./test9_validation_did_not_administer');
 const test10ReturnNavigation = require('./test10_return_navigation');
+const test11SelfHappyPath = require('./test11_self_happy_path');
+const test12SelfSkipTeaching = require('./test12_self_skip_teaching');
+const test13SelfSkipAlternative = require('./test13_self_skip_alternative');
+const test14SelfDidNotCollect = require('./test14_self_did_not_collect');
+const test15SelfDidNotAdminister = require('./test15_self_did_not_administer');
 
 // Test registry - add new tests here
 const tests = [
@@ -25,6 +30,11 @@ const tests = [
     { name: 'Test 8: Validation - Did Not Collect', fn: test8ValidationDidNotCollect },
     { name: 'Test 9: Validation - Did Not Administer', fn: test9ValidationDidNotAdminister },
     { name: 'Test 10: Return Navigation', fn: test10ReturnNavigation },
+    { name: 'Test 11: Self - Happy Path', fn: test11SelfHappyPath },
+    { name: 'Test 12: Self - Skip Coding Teaching', fn: test12SelfSkipTeaching },
+    { name: 'Test 13: Self - Skip Coding Alternative', fn: test13SelfSkipAlternative },
+    { name: 'Test 14: Self - Did Not Collect', fn: test14SelfDidNotCollect },
+    { name: 'Test 15: Self - Did Not Administer', fn: test15SelfDidNotAdminister },
 ];
 
 // Main test runner

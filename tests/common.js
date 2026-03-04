@@ -35,6 +35,13 @@ async function setupPage(browser, testMode = true) {
     return page;
 }
 
+async function setupSelfPage(browser, testMode = true) {
+    const page = await browser.newPage();
+    const url = testMode ? `${BASE_URL}/index.html?testMode=true&finishPage=finish_evaluation_self.html` : `${BASE_URL}/index.html`;
+    await page.goto(url);
+    return page;
+}
+
 // Start session (click start button)
 async function startSession(page) {
     await page.click('button[id="undo-direct-btn"]');
@@ -101,6 +108,7 @@ module.exports = {
     clickButton,
     clickButtonFast,
     setupPage,
+    setupSelfPage,
     startSession,
     openSettings,
     finishEvaluation,

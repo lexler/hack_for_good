@@ -117,3 +117,18 @@ Coached (mins): 5
 Additional notes:
 
 ```
+
+### Sample Email if skipping coding:
+```
+subject: [PCIT Intermediary]
+
+body:
+Alternative Session
+
+Number of days practiced last week: 5 / Not collected
+ECBI/WACB score: 34 / Not collected
+Coached (mins): 5
+
+Additional notes:
+
+```
