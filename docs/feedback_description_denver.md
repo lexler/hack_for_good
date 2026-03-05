@@ -7,6 +7,7 @@ This is to report data to the state. It has very strict guidelines.
 The feedback flow begins when the user chooses Finish Evaluation or Skip Coding from the session controls overlay. An overlay collects any remaining context, summarizes the observation, and returns the user to counting mode once complete. All logic runs client-side; no backend services are involved.
 
 ## UI
+```text
   ┌─────────────────────────────────────────────────────────────────┐
   │                       [MODAL OVERLAY]                           │
   │                                                                 │
@@ -54,7 +55,7 @@ The feedback flow begins when the user chooses Finish Evaluation or Skip Coding 
   │  │  └─────────────────────────────────────────────────────┘  │  │
   │  └───────────────────────────────────────────────────────────┘  │
   └─────────────────────────────────────────────────────────────────┘
-
+```
 
 ## Finish Evaluation Summary
 - Displays the eight behavioral counts with their labels.
