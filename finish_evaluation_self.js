@@ -175,7 +175,9 @@ class FinishEvaluationApp {
         row.dataset.skill = skill;
         row.innerHTML = `
             <div class="positive-skill-name">${skill}</div>
-            <div class="rating-options"></div>
+            <div class="rating-options">
+                <div class="chosen-rating-pill"></div>
+            </div>
         `;
 
         const ratingOptions = row.querySelector('.rating-options');
@@ -189,11 +191,13 @@ class FinishEvaluationApp {
             ratingOptions.appendChild(ratingButton);
         });
 
+        new ResizeObserver(() => this.movePillToChosenRating(row)).observe(ratingOptions);
         this.markChosenRating(row);
         return row;
     }
 
     rateSkill(row, rating) {
+        row.querySelector('.chosen-rating-pill').classList.add('slides');
         this.positiveSkillRatings[row.dataset.skill] = rating;
         this.markChosenRating(row);
     }
@@ -203,6 +207,15 @@ class FinishEvaluationApp {
         row.querySelectorAll('.rating-option').forEach(ratingButton => {
             ratingButton.setAttribute('aria-pressed', ratingButton.dataset.rating === chosenRating);
         });
+        this.movePillToChosenRating(row);
+    }
+
+    movePillToChosenRating(row) {
+        const chosenButton = row.querySelector('.rating-option[aria-pressed="true"]');
+        const pill = row.querySelector('.chosen-rating-pill');
+        pill.style.left = `${chosenButton.offsetLeft}px`;
+        pill.style.width = `${chosenButton.offsetWidth}px`;
+        pill.dataset.rating = chosenButton.dataset.rating;
     }
 
     populateAlternativeSummary(sessionType) {
