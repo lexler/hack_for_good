@@ -1,4 +1,4 @@
-// Version 0.0.77
+// Version 0.0.78
 
 // Configuration
 function getTimerDuration() {
@@ -28,7 +28,7 @@ const CAPTURE_WINDOW_SECONDS = getCaptureWindowDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.77';
+        this.version = '0.0.78';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
