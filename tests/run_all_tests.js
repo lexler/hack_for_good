@@ -21,6 +21,10 @@ const test16SettingsPausesTimer = require('./test16_settings_pauses_timer');
 const test17PositiveSkillsStartNotApplicable = require('./test17_positive_skills_start_not_applicable');
 const test18RatingAPositiveSkill = require('./test18_rating_a_positive_skill');
 const test19SkipCodingHidesPositiveSkills = require('./test19_skip_coding_hides_positive_skills');
+const test20EmailIncludesPositiveSkillRatings = require('./test20_email_includes_positive_skill_ratings');
+const test21UnratedSkillsEmailAsNotApplicable = require('./test21_unrated_skills_email_as_not_applicable');
+const test22SkipCodingEmailHasNoPositiveSkills = require('./test22_skip_coding_email_has_no_positive_skills');
+const test23ClipboardUnchangedByPositiveSkills = require('./test23_clipboard_unchanged_by_positive_skills');
 
 // Test registry - add new tests here
 const tests = [
@@ -43,6 +47,10 @@ const tests = [
     { name: 'Test 17: Positive Skills Start at Not Applicable', fn: test17PositiveSkillsStartNotApplicable },
     { name: 'Test 18: Rating a Positive Skill', fn: test18RatingAPositiveSkill },
     { name: 'Test 19: Skip Coding Hides Positive Skills', fn: test19SkipCodingHidesPositiveSkills },
+    { name: 'Test 20: Email Includes Positive Skill Ratings', fn: test20EmailIncludesPositiveSkillRatings },
+    { name: 'Test 21: Unrated Skills Email as Not Applicable', fn: test21UnratedSkillsEmailAsNotApplicable },
+    { name: 'Test 22: Skip Coding Email Has No Positive Skills', fn: test22SkipCodingEmailHasNoPositiveSkills },
+    { name: 'Test 23: Clipboard Unchanged by Positive Skills', fn: test23ClipboardUnchangedByPositiveSkills },
 ];
 
 // Main test runner

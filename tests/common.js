@@ -122,6 +122,19 @@ async function rate(page, skill, rating) {
     await ratingButton.click();
 }
 
+async function answerQuestions(page, { daysPracticed, ecbiScore, coachingMinutes }) {
+    await page.type('#days-practiced', String(daysPracticed));
+    await page.type('#ecbi-score', String(ecbiScore));
+    await page.click('#coaching-time', { clickCount: 3 });
+    await page.type('#coaching-time', String(coachingMinutes));
+}
+
+async function sendResults(page) {
+    await page.click('#copy-email-btn');
+    await delay(500);
+    return page.evaluate(() => window.testEmailData);
+}
+
 function expectRating(actual, skill, expected) {
     if (actual !== expected) {
         throw new Error(`${skill}: expected ${expected}, got ${actual}`);
@@ -180,6 +193,8 @@ module.exports = {
     positiveSkillsAreShown,
     ratingOf,
     rate,
+    answerQuestions,
+    sendResults,
     expectRating,
     verifyEmailData,
     logTestResult
