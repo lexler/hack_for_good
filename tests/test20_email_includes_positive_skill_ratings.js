@@ -21,13 +21,14 @@ async function test20EmailIncludesPositiveSkillRatings(browser) {
 
         verifyEmailData(email, '', '[PCIT Intermediary]', [
             'NTA (Negative Talk): 0\n' +
+            '\n' +
             'Imitate: Satisfactory\n' +
             'Show Enjoyment: Needs Practice\n' +
             'Ignore Disruptive Bx: Not Applicable\n' +
             '\n' +
             'Number of days practiced last week: 5'
         ]);
-        console.log('  ✓ Ratings follow the counts, before the questions');
+        console.log('  ✓ Ratings follow the counts after an empty line, before the questions');
 
         console.log('  ✅ Test 20 PASSED');
         return true;

@@ -1,4 +1,4 @@
-// Version 0.0.81
+// Version 0.0.82
 
 // Configuration
 function getTimerDuration() {
@@ -86,7 +86,7 @@ class Countdown {
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.81';
+        this.version = '0.0.82';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,

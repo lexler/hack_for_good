@@ -369,6 +369,7 @@ class FinishEvaluationApp {
                 const displayLabel = labelData ? `${labelData.code} (${labelData.description})` : `Button ${id}`;
                 content += `${displayLabel}: ${this.counts[id] || 0}\n`;
             });
+            content += '\n';
             POSITIVE_SKILLS.forEach(skill => {
                 content += `${skill}: ${this.positiveSkillRatings[skill]}\n`;
             });
