@@ -12,7 +12,7 @@ echo "=========================="
 # Check if puppeteer is installed
 if ! npm list puppeteer &>/dev/null; then
     echo -e "${YELLOW}📦 Installing Puppeteer...${NC}"
-    npm install puppeteer
+    npm ci
 fi
 
 # Start the server in background
