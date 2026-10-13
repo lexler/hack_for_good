@@ -84,6 +84,50 @@ async function finishEvaluation(page) {
     ]);
 }
 
+const POSITIVE_SKILLS = ['Imitate', 'Show Enjoyment', 'Ignore Disruptive Bx'];
+
+async function finishCodedSession(page) {
+    await startSession(page);
+    await finishEvaluation(page);
+}
+
+async function skipCodingAsTeachingSession(page) {
+    await openSettings(page);
+    await Promise.all([
+        page.click('#skip-coding-btn'),
+        page.waitForNavigation({ waitUntil: 'networkidle0', timeout: 10000 })
+    ]);
+    await page.click('#teaching-yes-btn');
+}
+
+async function positiveSkillsAreShown(page) {
+    return page.evaluate(() => {
+        const positiveSkills = document.getElementById('positive-skills');
+        return positiveSkills !== null && positiveSkills.offsetParent !== null;
+    });
+}
+
+async function ratingOf(page, skill) {
+    return page.evaluate(skill => {
+        const chosen = document.querySelector(`[data-skill="${skill}"] [aria-pressed="true"]`);
+        return chosen ? chosen.dataset.rating : 'nothing';
+    }, skill);
+}
+
+async function rate(page, skill, rating) {
+    const ratingButton = await page.$(`[data-skill="${skill}"] [data-rating="${rating}"]`);
+    if (!ratingButton) {
+        throw new Error(`Cannot rate ${skill} as ${rating}: no such choice on the page`);
+    }
+    await ratingButton.click();
+}
+
+function expectRating(actual, skill, expected) {
+    if (actual !== expected) {
+        throw new Error(`${skill}: expected ${expected}, got ${actual}`);
+    }
+}
+
 // Verify email data
 function verifyEmailData(emailData, expectedRecipient, expectedSubject, expectedBodyContains) {
     const errors = [];
@@ -130,6 +174,13 @@ module.exports = {
     secondsLeftOnTimer,
     waitSeconds,
     finishEvaluation,
+    POSITIVE_SKILLS,
+    finishCodedSession,
+    skipCodingAsTeachingSession,
+    positiveSkillsAreShown,
+    ratingOf,
+    rate,
+    expectRating,
     verifyEmailData,
     logTestResult
 };

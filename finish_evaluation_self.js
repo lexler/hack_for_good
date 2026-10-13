@@ -1,6 +1,17 @@
+const POSITIVE_SKILLS = ['Imitate', 'Show Enjoyment', 'Ignore Disruptive Bx'];
+const NOT_APPLICABLE = 'Not Applicable';
+const SKILL_RATINGS = [
+    { rating: 'Satisfactory', buttonLabel: 'Satisfactory' },
+    { rating: 'Needs Practice', buttonLabel: 'Needs Practice' },
+    { rating: NOT_APPLICABLE, buttonLabel: 'N/A' }
+];
+
 class FinishEvaluationApp {
     constructor() {
         this.counts = {};
+        this.positiveSkillRatings = Object.fromEntries(
+            POSITIVE_SKILLS.map(skill => [skill, NOT_APPLICABLE])
+        );
         this.isSkipCoding = false;
         this.isTeachingSession = null;
         this.questionAnswers = {
@@ -37,6 +48,7 @@ class FinishEvaluationApp {
             document.getElementById('combined-modal').classList.remove('show');
         } else {
             this.populateNormalSummary();
+            this.showPositiveSkills();
         }
     }
 
@@ -145,6 +157,51 @@ class FinishEvaluationApp {
                 <span class="summary-count">${this.counts[id]}</span>
             `;
             summaryList.appendChild(item);
+        });
+    }
+
+    showPositiveSkills() {
+        const positiveSkills = document.getElementById('positive-skills');
+        positiveSkills.innerHTML = '<h4>Positive</h4>';
+        POSITIVE_SKILLS.forEach(skill => {
+            positiveSkills.appendChild(this.createSkillRow(skill));
+        });
+        positiveSkills.hidden = false;
+    }
+
+    createSkillRow(skill) {
+        const row = document.createElement('div');
+        row.className = 'positive-skill';
+        row.dataset.skill = skill;
+        row.innerHTML = `
+            <div class="positive-skill-name">${skill}</div>
+            <div class="rating-options"></div>
+        `;
+
+        const ratingOptions = row.querySelector('.rating-options');
+        SKILL_RATINGS.forEach(({ rating, buttonLabel }) => {
+            const ratingButton = document.createElement('button');
+            ratingButton.type = 'button';
+            ratingButton.className = 'rating-option';
+            ratingButton.dataset.rating = rating;
+            ratingButton.textContent = buttonLabel;
+            ratingButton.addEventListener('click', () => this.rateSkill(row, rating));
+            ratingOptions.appendChild(ratingButton);
+        });
+
+        this.markChosenRating(row);
+        return row;
+    }
+
+    rateSkill(row, rating) {
+        this.positiveSkillRatings[row.dataset.skill] = rating;
+        this.markChosenRating(row);
+    }
+
+    markChosenRating(row) {
+        const chosenRating = this.positiveSkillRatings[row.dataset.skill];
+        row.querySelectorAll('.rating-option').forEach(ratingButton => {
+            ratingButton.setAttribute('aria-pressed', ratingButton.dataset.rating === chosenRating);
         });
     }
 

@@ -410,6 +410,52 @@ body.capture-window {
     border-bottom: none;
 }
 
+.positive-skills {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.positive-skills h4 {
+    margin: 0 0 10px 0;
+    color: #374151;
+    font-size: 16px;
+    text-align: left;
+}
+
+.positive-skill {
+    margin-bottom: 12px;
+}
+
+.positive-skill-name {
+    margin-bottom: 6px;
+    color: #374151;
+    font-weight: 500;
+    text-align: left;
+}
+
+.rating-options {
+    display: flex;
+    gap: 4px;
+}
+
+.rating-option {
+    flex: 1;
+    padding: 8px 4px;
+    border: 2px solid #d1d5db;
+    border-radius: 6px;
+    background: white;
+    color: #374151;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.rating-option[aria-pressed="true"] {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+}
+
 .alternative-session {
     text-align: center;
     font-size: 18px;

@@ -18,6 +18,9 @@ const test13SelfSkipAlternative = require('./test13_self_skip_alternative');
 const test14SelfDidNotCollect = require('./test14_self_did_not_collect');
 const test15SelfDidNotAdminister = require('./test15_self_did_not_administer');
 const test16SettingsPausesTimer = require('./test16_settings_pauses_timer');
+const test17PositiveSkillsStartNotApplicable = require('./test17_positive_skills_start_not_applicable');
+const test18RatingAPositiveSkill = require('./test18_rating_a_positive_skill');
+const test19SkipCodingHidesPositiveSkills = require('./test19_skip_coding_hides_positive_skills');
 
 // Test registry - add new tests here
 const tests = [
@@ -37,6 +40,9 @@ const tests = [
     { name: 'Test 14: Self - Did Not Collect', fn: test14SelfDidNotCollect },
     { name: 'Test 15: Self - Did Not Administer', fn: test15SelfDidNotAdminister },
     { name: 'Test 16: Settings Pauses Timer', fn: test16SettingsPausesTimer },
+    { name: 'Test 17: Positive Skills Start at Not Applicable', fn: test17PositiveSkillsStartNotApplicable },
+    { name: 'Test 18: Rating a Positive Skill', fn: test18RatingAPositiveSkill },
+    { name: 'Test 19: Skip Coding Hides Positive Skills', fn: test19SkipCodingHidesPositiveSkills },
 ];
 
 // Main test runner
