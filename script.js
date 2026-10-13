@@ -1,4 +1,4 @@
-// Version 0.0.75
+// Version 0.0.76
 
 // Configuration
 function getTimerDuration() {
@@ -28,7 +28,7 @@ const CAPTURE_WINDOW_SECONDS = getCaptureWindowDuration();
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.75';
+        this.version = '0.0.76';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -49,6 +49,7 @@ class CounterApp {
             duration: TIMER_DURATION_SECONDS,
             remaining: TIMER_DURATION_SECONDS,
             isActive: false,
+            isPaused: false,
             isExpired: false,
             isCaptureWindow: false,
             captureRemaining: 0,
@@ -235,12 +236,14 @@ class CounterApp {
     }
     
     showConfigModal() {
+        this.pauseTimer();
         document.getElementById('version-info').textContent = `Version ${this.version}`;
         document.getElementById('config-modal').classList.add('show');
     }
-    
+
     hideConfigModal() {
         document.getElementById('config-modal').classList.remove('show');
+        this.resumeTimer();
     }
     
     undoLastAction() {
@@ -375,7 +378,8 @@ class CounterApp {
     }
     
     startTimer() {
-        this.timer.startTime = Date.now();
+        const secondsAlreadyElapsed = this.timer.duration - this.timer.remaining;
+        this.timer.startTime = Date.now() - secondsAlreadyElapsed * 1000;
         this.timer.isActive = true;
         
         this.timer.intervalId = setInterval(() => {
@@ -390,6 +394,21 @@ class CounterApp {
         }, 1000);
     }
     
+    pauseTimer() {
+        if (!this.timer.isActive) return;
+
+        clearInterval(this.timer.intervalId);
+        this.timer.isActive = false;
+        this.timer.isPaused = true;
+    }
+
+    resumeTimer() {
+        if (!this.timer.isPaused) return;
+
+        this.timer.isPaused = false;
+        this.startTimer();
+    }
+
     resetTimer() {
         if (this.timer.intervalId) {
             clearInterval(this.timer.intervalId);
@@ -401,6 +420,7 @@ class CounterApp {
         this.timer.startTime = null;
         this.timer.remaining = this.timer.duration;
         this.timer.isActive = false;
+        this.timer.isPaused = false;
         this.timer.isExpired = false;
         this.timer.isCaptureWindow = false;
         this.timer.captureRemaining = 0;

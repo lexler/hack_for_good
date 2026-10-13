@@ -55,6 +55,21 @@ async function openSettings(page) {
     await page.waitForSelector('#finish-btn', { visible: true });
 }
 
+async function returnFromSettings(page) {
+    await page.click('#return-btn');
+    await page.waitForSelector('#config-modal', { hidden: true });
+}
+
+async function secondsLeftOnTimer(page) {
+    const reading = await page.$eval('#timer-display', element => element.textContent);
+    const [minutes, seconds] = reading.split(':').map(Number);
+    return minutes * 60 + seconds;
+}
+
+async function waitSeconds(seconds) {
+    await delay(seconds * 1000);
+}
+
 // Manual finish evaluation
 async function finishEvaluation(page) {
     await openSettings(page);
@@ -111,6 +126,9 @@ module.exports = {
     setupSelfPage,
     startSession,
     openSettings,
+    returnFromSettings,
+    secondsLeftOnTimer,
+    waitSeconds,
     finishEvaluation,
     verifyEmailData,
     logTestResult

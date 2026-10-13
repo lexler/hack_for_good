@@ -17,6 +17,7 @@ const test12SelfSkipTeaching = require('./test12_self_skip_teaching');
 const test13SelfSkipAlternative = require('./test13_self_skip_alternative');
 const test14SelfDidNotCollect = require('./test14_self_did_not_collect');
 const test15SelfDidNotAdminister = require('./test15_self_did_not_administer');
+const test16SettingsPausesTimer = require('./test16_settings_pauses_timer');
 
 // Test registry - add new tests here
 const tests = [
@@ -35,6 +36,7 @@ const tests = [
     { name: 'Test 13: Self - Skip Coding Alternative', fn: test13SelfSkipAlternative },
     { name: 'Test 14: Self - Did Not Collect', fn: test14SelfDidNotCollect },
     { name: 'Test 15: Self - Did Not Administer', fn: test15SelfDidNotAdminister },
+    { name: 'Test 16: Settings Pauses Timer', fn: test16SettingsPausesTimer },
 ];
 
 // Main test runner
