@@ -70,6 +70,28 @@ async function waitSeconds(seconds) {
     await delay(seconds * 1000);
 }
 
+const LONGEST_TEST_SESSION_MS = 40000;
+
+async function waitUntilCatchUpWindow(page) {
+    await page.waitForSelector('body.capture-window', { timeout: LONGEST_TEST_SESSION_MS });
+}
+
+async function waitUntilSecondsLeft(page, seconds) {
+    await page.waitForFunction(
+        expected => document.getElementById('timer-display').textContent === expected,
+        { timeout: LONGEST_TEST_SESSION_MS },
+        `0:${String(seconds).padStart(2, '0')}`
+    );
+}
+
+async function isOnCounterPage(page) {
+    return page.evaluate(() => window.location.pathname.endsWith('index.html'));
+}
+
+async function isInCatchUpWindow(page) {
+    return page.evaluate(() => document.body.classList.contains('capture-window'));
+}
+
 // Manual finish evaluation
 async function finishEvaluation(page) {
     await openSettings(page);
@@ -186,6 +208,10 @@ module.exports = {
     returnFromSettings,
     secondsLeftOnTimer,
     waitSeconds,
+    waitUntilCatchUpWindow,
+    waitUntilSecondsLeft,
+    isOnCounterPage,
+    isInCatchUpWindow,
     finishEvaluation,
     POSITIVE_SKILLS,
     finishCodedSession,

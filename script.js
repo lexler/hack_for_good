@@ -1,4 +1,4 @@
-// Version 0.0.80
+// Version 0.0.81
 
 // Configuration
 function getTimerDuration() {
@@ -25,10 +25,68 @@ function getCaptureWindowDuration() {
 
 const TIMER_DURATION_SECONDS = getTimerDuration();
 const CAPTURE_WINDOW_SECONDS = getCaptureWindowDuration();
+const COUNTDOWN_TICK_MS = 250;
+
+class Countdown {
+    constructor(seconds, { onTick, onFinish }) {
+        this.seconds = seconds;
+        this.elapsedBeforeThisRunMs = 0;
+        this.runningSince = null;
+        this.tickIntervalId = null;
+        this.onTick = onTick;
+        this.onFinish = onFinish;
+    }
+
+    get isRunning() {
+        return this.runningSince !== null;
+    }
+
+    get elapsedMs() {
+        const thisRunMs = this.isRunning ? Date.now() - this.runningSince : 0;
+        return this.elapsedBeforeThisRunMs + thisRunMs;
+    }
+
+    get secondsLeft() {
+        return Math.max(0, this.seconds - Math.floor(this.elapsedMs / 1000));
+    }
+
+    start() {
+        if (this.isRunning) return;
+
+        this.runningSince = Date.now();
+        this.tickIntervalId = setInterval(() => this.tick(), COUNTDOWN_TICK_MS);
+    }
+
+    pause() {
+        if (!this.isRunning) return;
+
+        this.elapsedBeforeThisRunMs = this.elapsedMs;
+        this.stopRunning();
+    }
+
+    reset() {
+        this.stopRunning();
+        this.elapsedBeforeThisRunMs = 0;
+    }
+
+    tick() {
+        this.onTick();
+        if (this.elapsedMs >= this.seconds * 1000) {
+            this.pause();
+            this.onFinish();
+        }
+    }
+
+    stopRunning() {
+        clearInterval(this.tickIntervalId);
+        this.tickIntervalId = null;
+        this.runningSince = null;
+    }
+}
 
 class CounterApp {
     constructor() {
-        this.version = '0.0.80';
+        this.version = '0.0.81';
         this.isStarted = false;
         this.counts = {
             1: 0, 2: 0, 3: 0, 4: 0,
@@ -45,17 +103,18 @@ class CounterApp {
         this.isSkipCoding = false;
         this.isTeachingSession = null;
         this.timer = {
-            startTime: null,
-            duration: TIMER_DURATION_SECONDS,
-            remaining: TIMER_DURATION_SECONDS,
-            isActive: false,
-            isPaused: false,
             isExpired: false,
-            isCaptureWindow: false,
-            captureRemaining: 0,
-            captureIntervalId: null,
-            intervalId: null
+            isCaptureWindow: false
         };
+        this.sessionCountdown = new Countdown(TIMER_DURATION_SECONDS, {
+            onTick: () => this.updateTimerDisplay(),
+            onFinish: () => this.expireTimer()
+        });
+        this.catchUpCountdown = new Countdown(CAPTURE_WINDOW_SECONDS, {
+            onTick: () => this.updateTimerDisplay(),
+            onFinish: () => this.endCaptureWindow()
+        });
+        this.pausedCountdown = null;
         this.defaultLabels = {
             1: { code: 'TA', description: 'Neutral Talk' },
             2: { code: 'BD', description: 'Behavior Description' },
@@ -217,7 +276,7 @@ class CounterApp {
     incrementCount(id) {
         if (this.timer.isExpired) return;
 
-        if (!this.timer.isActive && !this.timer.isCaptureWindow && this.isStarted) {
+        if (!this.sessionCountdown.isRunning && !this.timer.isCaptureWindow && this.isStarted) {
             this.startTimer();
         }
         
@@ -378,86 +437,49 @@ class CounterApp {
     }
     
     startTimer() {
-        const secondsAlreadyElapsed = this.timer.duration - this.timer.remaining;
-        this.timer.startTime = Date.now() - secondsAlreadyElapsed * 1000;
-        this.timer.isActive = true;
-        
-        this.timer.intervalId = setInterval(() => {
-            const elapsed = Math.floor((Date.now() - this.timer.startTime) / 1000);
-            this.timer.remaining = Math.max(0, this.timer.duration - elapsed);
-            
-            this.updateTimerDisplay();
-            
-            if (this.timer.remaining <= 0) {
-                this.expireTimer();
-            }
-        }, 1000);
+        this.sessionCountdown.start();
     }
-    
-    pauseTimer() {
-        if (!this.timer.isActive) return;
 
-        clearInterval(this.timer.intervalId);
-        this.timer.isActive = false;
-        this.timer.isPaused = true;
+    pauseTimer() {
+        this.pausedCountdown = [this.sessionCountdown, this.catchUpCountdown]
+            .find(countdown => countdown.isRunning) || null;
+        if (this.pausedCountdown) {
+            this.pausedCountdown.pause();
+        }
     }
 
     resumeTimer() {
-        if (!this.timer.isPaused) return;
-
-        this.timer.isPaused = false;
-        this.startTimer();
+        if (this.pausedCountdown) {
+            this.pausedCountdown.start();
+        }
+        this.pausedCountdown = null;
     }
 
     resetTimer() {
-        if (this.timer.intervalId) {
-            clearInterval(this.timer.intervalId);
-        }
-        if (this.timer.captureIntervalId) {
-            clearInterval(this.timer.captureIntervalId);
-        }
-
-        this.timer.startTime = null;
-        this.timer.remaining = this.timer.duration;
-        this.timer.isActive = false;
-        this.timer.isPaused = false;
+        this.sessionCountdown.reset();
+        this.catchUpCountdown.reset();
+        this.pausedCountdown = null;
         this.timer.isExpired = false;
         this.timer.isCaptureWindow = false;
-        this.timer.captureRemaining = 0;
-        this.timer.captureIntervalId = null;
-        this.timer.intervalId = null;
 
         document.body.classList.remove('capture-window');
         this.updateTimerDisplay();
         this.enableCountingButtons();
     }
-    
-    expireTimer() {
-        clearInterval(this.timer.intervalId);
-        this.timer.isActive = false;
 
+    expireTimer() {
         this.playEndOfSessionAlert();
         this.startCaptureWindow();
     }
 
     startCaptureWindow() {
         this.timer.isCaptureWindow = true;
-        this.timer.captureRemaining = CAPTURE_WINDOW_SECONDS;
         document.body.classList.add('capture-window');
+        this.catchUpCountdown.start();
         this.updateTimerDisplay();
-
-        this.timer.captureIntervalId = setInterval(() => {
-            this.timer.captureRemaining--;
-            this.updateTimerDisplay();
-
-            if (this.timer.captureRemaining <= 0) {
-                this.endCaptureWindow();
-            }
-        }, 1000);
     }
 
     endCaptureWindow() {
-        clearInterval(this.timer.captureIntervalId);
         this.timer.isCaptureWindow = false;
         this.timer.isExpired = true;
         document.body.classList.remove('capture-window');
@@ -506,14 +528,15 @@ class CounterApp {
         const timerElement = document.getElementById('timer-display');
 
         if (this.timer.isCaptureWindow) {
-            timerElement.textContent = `:${this.timer.captureRemaining.toString().padStart(2, '0')}`;
+            timerElement.textContent = `:${this.catchUpCountdown.secondsLeft.toString().padStart(2, '0')}`;
             timerElement.classList.add('capture-window');
             timerElement.classList.remove('expired');
             return;
         }
 
-        const minutes = Math.floor(this.timer.remaining / 60);
-        const seconds = this.timer.remaining % 60;
+        const secondsLeft = this.sessionCountdown.secondsLeft;
+        const minutes = Math.floor(secondsLeft / 60);
+        const seconds = secondsLeft % 60;
         timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
         timerElement.classList.remove('capture-window');
 
@@ -581,7 +604,7 @@ class CounterApp {
     
     generateSessionData() {
         const timestamp = new Date().toLocaleString();
-        const sessionDuration = this.timer.duration - this.timer.remaining;
+        const sessionDuration = TIMER_DURATION_SECONDS - this.sessionCountdown.secondsLeft;
         const minutes = Math.floor(sessionDuration / 60);
         const seconds = sessionDuration % 60;
         const durationString = `${minutes}:${seconds.toString().padStart(2, '0')}`;

@@ -25,6 +25,9 @@ const test20EmailIncludesPositiveSkillRatings = require('./test20_email_includes
 const test21UnratedSkillsEmailAsNotApplicable = require('./test21_unrated_skills_email_as_not_applicable');
 const test22SkipCodingEmailHasNoPositiveSkills = require('./test22_skip_coding_email_has_no_positive_skills');
 const test23ClipboardUnchangedByPositiveSkills = require('./test23_clipboard_unchanged_by_positive_skills');
+const test24SettingsPausesCatchUpWindow = require('./test24_settings_pauses_catch_up_window');
+const test25ManyPausesAddNoTime = require('./test25_many_pauses_add_no_time');
+const test26SettingsOpenPastTheEndKeepsSession = require('./test26_settings_open_past_the_end_keeps_session');
 
 // Test registry - add new tests here
 const tests = [
@@ -51,6 +54,9 @@ const tests = [
     { name: 'Test 21: Unrated Skills Email as Not Applicable', fn: test21UnratedSkillsEmailAsNotApplicable },
     { name: 'Test 22: Skip Coding Email Has No Positive Skills', fn: test22SkipCodingEmailHasNoPositiveSkills },
     { name: 'Test 23: Clipboard Unchanged by Positive Skills', fn: test23ClipboardUnchangedByPositiveSkills },
+    { name: 'Test 24: Settings Pauses the Catch-Up Window', fn: test24SettingsPausesCatchUpWindow },
+    { name: 'Test 25: Many Pauses Add No Time', fn: test25ManyPausesAddNoTime },
+    { name: 'Test 26: Settings Open Past the End Keeps the Session', fn: test26SettingsOpenPastTheEndKeepsSession },
 ];
 
 // Main test runner
